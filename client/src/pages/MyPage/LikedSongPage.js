@@ -5,11 +5,18 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { Colors, GlobalStyle } from '../../components/utils/_var';
-// import SideNav from '../../components/Mainpage/MainSideNav';
+import SideNav from '../../components/SideNav';
+import { changeHeader } from '../../redux/action';
+import { useDispatch } from 'react-redux';
 axios.defaults.withCredentials = true;
 require('dotenv').config();
 
 const Wrapper = styled.div`
+  .main {
+    display: flex;
+    /* background-color: #f7efe5; */
+    min-height: calc(100vh - 41px - 56px);
+  }
   .scrollable::-webkit-scrollbar {
     background: ${Colors.beige};
     height: 10px;
@@ -41,7 +48,7 @@ const Wrapper = styled.div`
   }
   .field-container {
     display: flex;
-    margin: .75rem auto 0em;
+    margin: .75rem 1rem 0em;
     justify-content: center;
     align-items: center;
     margin-bottom: -20px;
@@ -152,6 +159,18 @@ const Wrapper = styled.div`
   }
 `;
 
+const HashTag = styled.div`
+  float: left;
+  margin: auto .2rem .2rem;
+  padding: .2rem;
+  border: solid 1px;
+  border-radius: 5px;
+  background-color: ${props => props.backgroundColor};
+  color: ${props => props.textColor};
+  font-size: .7rem;
+`;
+
+
 // =====================================================================
 //                                TO DO
 // =====================================================================
@@ -159,34 +178,48 @@ const Wrapper = styled.div`
 // 1. CSS 개선
 //
 
-const GetLikedSong = () => {
-  // const token = localStorage.getItem('accessToken');
+const GetLikedSong = ({ modal }) => {
+  const token = localStorage.getItem('accessToken');
+  const accessTokenTime = localStorage.getItem('accessTokenTime');
+  const expiredTime = Number(process.env.REACT_APP_TOKEN_TIME);
   const [songList, setSongList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [CheckList, setCheckList] = useState([]);
   const [IdList, setIdList] = useState([]);
   const information = JSON.parse(localStorage.getItem('userinfo'));
+  const Hashtag = ['좋아요', '#인생곡인', '#가사가재밌는', '#몸이기억하는', '#눈물샘자극', '#노래방금지곡', '#영원한18번', '#추억소환'];
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  useEffect(() => dispatch(changeHeader([true, false])), [dispatch]);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const result = await axios.get(process.env.REACT_APP_API_URL + '/my-like', {
-          headers: {
-            // Authorization: `Bearer ${token}`,
-
-            // JUST FOR TEST PURPOSES
-            Authorization: information.id,
-            'Content-Type': 'application/json'
-          }
-        });
-        setSongList(result.data.data);
-        setIsLoading(false);
+        if (parseInt(accessTokenTime, 10) + expiredTime - new Date().getTime() < 0) {
+          // alert('토큰이 만료되었습니다');
+          modal();
+          setIsLoading(false);
+        } else {
+          const result = await axios.get(process.env.REACT_APP_API_URL + '/my-like', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
+          });
+          setSongList(result.data.data);
+          setIsLoading(false);
+        }
       } catch (error) {
-        console.log(error);
+        if (error.response.data.message === 'No songs are added to the list') {
+          setIsLoading(false);
+        } else {
+          console.log(error);
+        }
       }
     };
+
     fetchData();
   }, []);
 
@@ -211,13 +244,13 @@ const GetLikedSong = () => {
     // 체크할 시 CheckList에 id값 넣기
     if (e.target.checked) {
       setCheckList([...CheckList, id]);
-    // 체크 해제할 시 CheckList에서 해당 id값이 아닌 값만 배열에 넣기
+      // 체크 해제할 시 CheckList에서 해당 id값이 아닌 값만 배열에 넣기
     } else {
       setCheckList(CheckList.filter((checkedId) => checkedId !== id));
     }
   };
 
-  // console.log('checked song id: ' + CheckList);
+  console.log('checked song id: ' + CheckList);
 
   // Song Detail 페이지로 연결
   const handleSongClicked = (song) => {
@@ -227,19 +260,20 @@ const GetLikedSong = () => {
   };
 
   const handleSongDelete = () => {
-    if (CheckList.length > 0) {
-      axios.delete(process.env.REACT_APP_API_URL + '/my-like', {
-        headers: {
-          // Authorization: `Bearer ${token}`,
-
-          // JUST FOR TEST PURPOSES
-          Authorization: information.id,
-          'Content-Type': 'application/json'
-        },
-        data: {
-          songId: CheckList
-        }
-      })
+    if (parseInt(accessTokenTime, 10) + expiredTime - new Date().getTime() < 0) {
+      // alert('토큰이 만료되었습니다');
+      modal();
+    } else if (CheckList.length > 0) {
+      axios
+        .delete(process.env.REACT_APP_API_URL + '/my-like', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          data: {
+            songId: CheckList
+          }
+        })
         .then((res) => {
           console.log(res.data.message);
         })
@@ -255,65 +289,72 @@ const GetLikedSong = () => {
   if (isLoading) return <div>로딩 중입니다...</div>;
   return (
     <Wrapper>
-      {/* <SideNav /> */}
       <GlobalStyle />
-      <div>
-        <div className='button-container'>
-          <button onClick={handleSongDelete}>선택 항목 삭제</button>
-        </div>
-        <div className='field-container'>
-          <input
-            type='checkbox'
-            className='select-all'
-            onChange={onChangeAll}
-            checked={CheckList.length === IdList.length}
-          />
-          <div className='field'>
-            <div className='grid-item field-album'>앨범</div>
-            <div className='grid-item field-title'>제목</div>
-            <div className='grid-item field-artist'>가수</div>
-            <div className='grid-item field-date'>발매일</div>
-            <div className='grid-item field-like'>좋아요</div>
+      <div className='main'>
+        <SideNav />
+        <div>
+          <div className='button-container'>
+            <button onClick={handleSongDelete}>선택 항목 삭제</button>
           </div>
-        </div><br />
-        {songList.length !== 0
-          ? songList.map((song, idx) => {
-            return (
-              <div key={idx}>
-                <div className='song-container'>
-                  <input
-                    type='checkbox'
-                    className='select-one'
-                    onChange={(e) => onChangeEach(e, song.id)}
-                    checked={CheckList.includes(song.id)}
-                  />
-                  <div className='song-info-container' onClick={() => handleSongClicked(song)}>
-                    <img src={song.album_art} alt={song.id} className='album_art' />
-                    <div className='title scrollable'>{song.title}</div>
-                    <div className='artist scrollable'>{song.artist}</div>
-                    <div className='date'>{song.date}</div>
-                    <div className='like'>
-                      <FontAwesomeIcon icon={faHeart} size='xs' color='red' />
-                      {' '}{song.hashtagLike[0][1]}
+          <div className='field-container'>
+            <input
+              type='checkbox'
+              className='select-all'
+              onChange={onChangeAll}
+              checked={CheckList.length === IdList.length}
+            />
+            <div className='field'>
+              <div className='grid-item field-album'>앨범</div>
+              <div className='grid-item field-title'>제목</div>
+              <div className='grid-item field-artist'>가수</div>
+              <div className='grid-item field-date'>발매일</div>
+              <div className='grid-item field-like'>좋아요</div>
+            </div>
+          </div><br />
+          {songList.length !== 0
+            ? songList.map((song, idx) => {
+              return (
+                <div key={idx}>
+                  <div className='song-container'>
+                    <input
+                      type='checkbox'
+                      className='select-one'
+                      onChange={(e) => onChangeEach(e, song.id)}
+                      checked={CheckList.includes(song.id)}
+                    />
+                    <div className='song-info-container' onClick={() => handleSongClicked(song)}>
+                      <img src={song.album_art} alt={song.id} className='album_art' />
+                      <div className='title scrollable'>{song.title}</div>
+                      <div className='artist scrollable'>{song.artist}</div>
+                      <div className='date'>{song.date}</div>
+                      <div className='like'>
+                        <FontAwesomeIcon icon={faHeart} size='xs' color='red' />
+                        {' '}{song.hashtagLike[0][1]}
+                      </div>
+                      <div className='hashtagBox'>
+                        {song.userHashtagLikes && song.hashtagLike.map((tag, idx) => {
+                          return (
+                            <div key={song + idx}>
+                              {tag[0] === '좋아요'
+                                ? null
+                                : <HashTag
+                                    backgroundColor={song.userHashtagLikes.includes(Hashtag.indexOf(tag[0]) + 1) ? Colors.darkGray : 'white'}
+                                    textColor={song.userHashtagLikes.includes(Hashtag.indexOf(tag[0]) + 1) ? 'white' : Colors.darkGray}
+                                  >
+                                  {tag[0]} {tag[1]}
+                                  </HashTag>}
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                    <div className='hashtagBox'>
-                      {song.hashtagLike.map((el, idx) => {
-                        return (
-                          <div key={idx}>
-                            {el[0] === '좋아요'
-                              ? null
-                              : <div className='hashtag' key={idx}>{el[0]} {el[1]}</div>}
-                          </div>
-                        );
-                      })}
-                    </div>
+                    <br />
                   </div>
-                  <br />
                 </div>
-              </div>
-            );
-          })
-          : <div className='message'>현재 좋아요를 선택한 곡이 없습니다.</div>}
+              );
+            })
+            : <div className='message'>현재 좋아요를 선택한 곡이 없습니다.</div>}
+        </div>
       </div>
     </Wrapper>
   );
