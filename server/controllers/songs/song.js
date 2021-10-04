@@ -1,18 +1,10 @@
 const { isAuthorized } = require('../tokenFunctions');
-const {
-  user,
-  song,
-  hashtaglike,
-  songuserhashtaglike,
-  comment
-} = require('../../models');
+const { user, song, hashtaglike, songuserhashtaglike, comment } = require('../../models');
 const Sequelize = require('sequelize');
 
 module.exports = async (req, res) => {
   try {
-    // const accessTokenData = isAuthorized(req);
-    // JUST FOR TEST PURPOSES: without a real accessToken
-    const accessTokenData = { id: req.headers.authorization };
+    const accessTokenData = isAuthorized(req);
 
     const songs = req.query.query;
 
@@ -26,22 +18,10 @@ module.exports = async (req, res) => {
       });
     } else {
       // replace('|', ',') => 최초 1개만 변경, replace(/[|]/g, ',') => 모든 occurrence를 변경
-      songList.dataValues.title = songList.dataValues.title.replace(
-        /[|]/g,
-        ','
-      );
-      songList.dataValues.artist = songList.dataValues.artist.replace(
-        /[|]/g,
-        ','
-      );
-      songList.dataValues.genre = songList.dataValues.genre.replace(
-        /[|]/g,
-        ','
-      );
-      songList.dataValues.album = songList.dataValues.album.replace(
-        /[|]/g,
-        ','
-      );
+      songList.dataValues.title = songList.dataValues.title.replace(/[|]/g, ',');
+      songList.dataValues.artist = songList.dataValues.artist.replace(/[|]/g, ',');
+      songList.dataValues.genre = songList.dataValues.genre.replace(/[|]/g, ',');
+      songList.dataValues.album = songList.dataValues.album.replace(/[|]/g, ',');
 
       let getHashtagName = await songuserhashtaglike.findAll({
         include: [
@@ -91,15 +71,14 @@ module.exports = async (req, res) => {
         return comments.map((comments) => [comments.userId]);
       });
       const getContent = getComments.map((comments) => {
-        return comments.map((comments) => [
-          comments.content,
-          comments.createdAt
-        ]);
+        return comments.map((comments) => [comments.content, comments.createdAt]);
       });
 
+      const flattenedUserId = getUserId.reduce((acc, val) => acc.concat(val), []);
+
       const userNickname = [];
-      for (let i = 0; i < getUserId.flat().length; i++) {
-        userNickname.push([getUserId.flat()[i][0]]);
+      for (let i = 0; i < flattenedUserId.length; i++) {
+        userNickname.push([flattenedUserId[i][0]]);
       }
 
       const getUserNicknames = [];
@@ -117,15 +96,15 @@ module.exports = async (req, res) => {
         getUserNickname.push(nickname.dataValues.nickname);
       }
 
-      for (let i = 0; i < getContent.flat().length; i++) {
-        if (getContent.flat()[i][0] !== getUserNickname[i]) {
-          getContent.flat()[i].unshift(getUserNickname[i]);
+      const flattenedContent = getContent.reduce((acc, val) => acc.concat(val), []);
+
+      for (let i = 0; i < flattenedContent.length; i++) {
+        if (flattenedContent[i][0] !== getUserNickname[i]) {
+          flattenedContent[i].unshift(getUserNickname[i]);
         } else {
           continue;
         }
       }
-
-      // console.log(getContent.flat());
 
       const payload = {
         id: songList.dataValues.id,
@@ -138,15 +117,15 @@ module.exports = async (req, res) => {
         year: songList.dataValues.year,
         lyrics: songList.dataValues.lyrics,
         hashtagLike: hashtaglikeCount,
-        comments: getContent.flat()
+        comments: flattenedContent
       };
 
       // 로그인 된 유저에 한해서는 본인이 추가한 좋아요 및 해시태그 정보를 추가적으로 보내주어야 함.
-      if (accessTokenData.id) {
+      if (accessTokenData) {
         let userContent = await songuserhashtaglike.findAll({
           where: {
             userId: accessTokenData.id,
-            songId: req.query.query
+            songId: songs
           }
         });
 

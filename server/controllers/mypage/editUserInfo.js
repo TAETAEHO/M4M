@@ -1,4 +1,4 @@
-// const { isAuthorized } = require('../tokenFunctions');
+const { isAuthorized } = require('../tokenFunctions');
 const { user } = require('../../models');
 const crypto = require('crypto');
 const Sequelize = require('sequelize');
@@ -7,14 +7,10 @@ require('sequelize-values')(Sequelize);
 // PATCH http://localhost:80/user-info
 module.exports = async (req, res) => {
   try {
-    // const accessTokenData = isAuthorized(req);
-
-    // JUST FOR TEST PURPOSES: without a real accessToken
-    const accessTokenData = { id: req.headers.authorization };
-    // console.log(req.headers.authorization);
-
+    const accessTokenData = isAuthorized(req);
+    // console.log(accessTokenData);
     if (!accessTokenData) {
-      return res.status(404).send({ message: 'You\'re not logged in.' });
+      return res.status(401).send({ message: 'You\'re not logged in.' });
     } else {
       // console.log(req.body);
 

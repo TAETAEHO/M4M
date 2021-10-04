@@ -1,8 +1,9 @@
-import axios from 'axios';
-import { useState } from 'react';
 import styled from 'styled-components';
-import { notify, changeType } from '../redux/action';
+import { getRegExp } from 'korean-regexp';
+import { useState } from 'react';
+import { notify, changeType, getResult } from '../redux/action';
 import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
 
 axios.defaults.headers.withCredentials = true;
 
@@ -18,6 +19,9 @@ const HeaderSearchbarWrapper = styled.div`
     display: flex;
     justify-content: center;
   }
+  .searchbar-dropbox, .searchbar-text {
+    font-family: 'NeoDunggeunmo';
+  }
   .searchbar-dropbox {
     font-size: 18px;
   }
@@ -31,6 +35,7 @@ const HeaderSearchbarWrapper = styled.div`
 `;
 
 function HeaderSearchbar (isRecommend) {
+  const songsBulkState = useSelector(state => state.songsBulkReducer).songsBulk;
   const notiState = useSelector(state => state.notiReducer).notifications;
   const dispatch = useDispatch();
   const searchTypeList = ['title', 'artist'];
@@ -39,19 +44,13 @@ function HeaderSearchbar (isRecommend) {
 
   const getSearchResult = (reqSearchType, reqKeyword) => {
     if (reqKeyword.length !== 0) {
-      axios
-        .get(
-          process.env.REACT_APP_API_URL + `/${reqSearchType}?query=${reqKeyword}`,
-          { headers: { 'Content-Type': 'application/json' } }
-        )
-        .then((searchResult) => {
-          const songIdList = searchResult.data.data;
-          console.log(songIdList);
-        })
-        .catch((err) => {
-          dispatch(changeType('No Result'));
-          console.log(err);
-        });
+      const result = songsBulkState.filter((song) => getRegExp(reqKeyword).test(song[reqSearchType]));
+      if (result.length !== 0) {
+        dispatch(changeType(`검색 결과: ${reqSearchType} - ${reqKeyword}`));
+        dispatch(getResult(result));
+      } else {
+        dispatch(changeType('No Result'));
+      }
     } else {
       if (notiState.message === '') {
         dispatch(notify('검색창이 비었습니다. 추억을 입력해주세요! ᕕ( ᐛ )ᕗ'));
@@ -71,7 +70,7 @@ function HeaderSearchbar (isRecommend) {
 
   return (
     <HeaderSearchbarWrapper>
-      <div className={!isRecommend.isRecommend ? 'searchbar' : 'display-none'}>
+      <div className={isRecommend.isRecommend ? 'searchbar' : 'display-none'}>
         <select className='searchbar-dropbox' onChange={handleSearchTypeChange}>
           {searchTypeList.map((searchType, idx) => <option value={searchType} key={idx + 1}>{searchType}</option>)}
         </select>

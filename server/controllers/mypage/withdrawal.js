@@ -1,17 +1,13 @@
-// const { isAuthorized } = require('../tokenFunctions');
+const { isAuthorized } = require('../tokenFunctions');
 const { user } = require('../../models');
 
 // DELETE http://localhost:80/withdrawal
 module.exports = async (req, res) => {
   try {
-    // const accessTokenData = isAuthorized(req);
-
-    // JUST FOR TEST PURPOSES: without a real accessToken
-    // console.log(req.headers.authorization);
-    const accessTokenData = { id: req.headers.authorization };
+    const accessTokenData = isAuthorized(req);
 
     if (!accessTokenData) {
-      return res.status(404).send({ message: 'You\'re not logged in.' });
+      return res.status(401).send({ message: 'You\'re not logged in.' });
     } else {
       const userInfo = await user.findOne({
         where: {
@@ -27,20 +23,19 @@ module.exports = async (req, res) => {
         });
 
         res.setHeader('authorization', '');
-        // res.cookie('refreshToken', '');
 
         res.status(200).json({
           message: 'Successfully withdrawn'
         });
       } else {
         res.status(400).json({
-          message: 'Error'
+          message: 'error'
         });
       }
     }
   } catch {
     res.status(400).json({
-      message: 'Error'
+      message: 'error'
     });
   }
 };

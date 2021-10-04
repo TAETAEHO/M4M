@@ -12,9 +12,10 @@ const NotiWrapper = styled.div`
     font-size: 18px;
     word-break: break-all;
     box-shadow: 4px 4px 0px gray;
-    animation: blink 3000ms forwards;
+    animation: noti_blink 3000ms forwards;
+    z-index: 99;
   }
-  @keyframes blink {     
+  @keyframes noti_blink {     
     0% { opacity: 0; }
     4% { opacity: 0.8; }
     8% { opacity: 0.6; }
@@ -23,9 +24,6 @@ const NotiWrapper = styled.div`
     92% { opacity: 0.6; }
     96% { opacity: 0.8; }
     100% { opacity: 0; }
-  }
-  .test {
-    position: absolute;
   }
 `;
 
