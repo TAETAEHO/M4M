@@ -37,18 +37,14 @@ module.exports = async (req, res) => {
         let allMembers = await user.findAll({
           order: [['createdAt', 'DESC']]
         });
-  
+
         const userNickname = `${nickname}#${allMembers[0].dataValues.id + 1}`;
 
         user.create({ nickname: userNickname, email: email, kakao: kakao });
 
-        allMembers = await user.findAll({
-          order: [['createdAt', 'DESC']]
-        });
-
         const accessToken = generateAccessToken(allMembers[0].dataValues);
         const refreshToken = generateRefreshToken(allMembers[0].dataValues);
-        
+
         res.cookie('accessToken', accessToken, cookieOptions);
         res.cookie('refreshToken', refreshToken, cookieOptions);
         res.status(201).json({ accessToken, refreshToken, message: 'ok' });
