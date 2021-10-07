@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
     const accessTokenData = isAuthorized(req);
 
     if (!accessTokenData) {
-      return res.status(401).json({ message: 'You\'re not logged in' });
+      return res.status(401).json({ message: "You're not logged in" });
     } else {
       const { songId, content } = req.body;
 
@@ -17,8 +17,6 @@ module.exports = async (req, res) => {
           songId: songId
         }
       });
-
-      // console.log(userComments.length);
 
       if (userComments.length >= 50) {
         return res.status(400).json({ message: 'Already reached the limit' });
@@ -33,9 +31,7 @@ module.exports = async (req, res) => {
       });
 
       if (newContent) {
-        return res
-          .status(409)
-          .json({ message: 'You cannot write the same comment' });
+        return res.status(409).json({ message: 'You cannot write the same comment' });
       }
 
       await comment.create({
