@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
         res.cookie('refreshToken', refreshToken, cookieOptions);
         res.status(200).json({ accessToken, refreshToken, message: 'ok' });
       } else {
-        let allMembers = await user.findAll({
+        const allMembers = await user.findAll({
           order: [['createdAt', 'DESC']]
         });
 
@@ -42,7 +42,7 @@ module.exports = async (req, res) => {
           kakao: true
         };
 
-        user.create(payload);
+        await user.create(payload);
 
         const accessToken = generateAccessToken(payload);
         const refreshToken = generateRefreshToken(payload);
