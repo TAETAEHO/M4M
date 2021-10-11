@@ -24,6 +24,7 @@ const SideNavWrapper = styled.div`
   }
   .menu {
     margin: 8px 12px;
+    /* margin: 8px; */
     color: gray;
   }
   .main-deactive {
@@ -146,9 +147,8 @@ function SideNav () {
   };
 
   const maintainNavState = () => {
-    if (window.innerWidth >= 768) {
-      if (navState === 'active') setNavState('active');
-    } else setNavState('deactive');
+    if (768 <= window.innerWidth ) setNavState('active');
+    else setNavState('deactive');
   };
 
   useEffect(() => window.addEventListener('resize', maintainNavState));

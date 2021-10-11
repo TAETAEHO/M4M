@@ -3,11 +3,8 @@ import { getRegExp } from 'korean-regexp';
 import { useState } from 'react';
 import { notify, changeType, getResult } from '../redux/action';
 import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
 import { media } from './utils/_media-queries';
 import { Colors } from './utils/_var';
-
-axios.defaults.headers.withCredentials = true;
 
 const HeaderSearchbarWrapper = styled.div`
   .searchbar-none {
@@ -77,15 +74,27 @@ const HeaderSearchbarWrapper = styled.div`
   .display-none {
     display: none;
   }
+  .bar-deactive {
+    display: none;
+  }
+  .icon-deactive {
+    display: none;
+  }
+  .icon-active {
+    right: 0;
+    cursor: pointer;
+  }
+  .search-icon-active {
+    width: 1.5rem;
+  }
 `;
 
-function HeaderSearchbar (isRecommend) {
+function HeaderSearchbar({ isRecommend, handleMediaState, barState, handleBarState, resBarState, handleMessage, handleNotice }) {
   const songsBulkState = useSelector(state => state.songsBulkReducer).songsBulk;
   const notiState = useSelector(state => state.notiReducer).notifications;
   const dispatch = useDispatch();
   const searchTypeList = ['제목', '아티스트'];
   const searchTypeName = ['title', 'artist'];
-  const keyword = document.getElementsByClassName('searchbar-text');
   const [searchType, setSearchType] = useState(searchTypeName[0]);
 
   const getSearchResult = (reqSearchType, reqKeyword) => {
@@ -99,16 +108,16 @@ function HeaderSearchbar (isRecommend) {
       }
     } else {
       if (notiState.message === '') {
-        dispatch(notify('검색창이 비었습니다. 추억을 입력해주세요! ᕕ( ᐛ )ᕗ'));
+        // dispatch(notify('검색창이 비었습니다. 추억을 입력해주세요! ᕕ( ᐛ )ᕗ'));
+        handleNotice(true);
+        handleMessage('검색창이 비었습니다. 추억을 입력해주세요! ᕕ( ᐛ )ᕗ');
       }
     }
+    resBarState();
   };
 
   const handleSearchTypeChange = (e) => setSearchType(e.target.value);
-  const handleClick = (e) => {
-    // getSearchResult(searchType, e.target.value);
-    console.log(e);
-  };
+
   const handleKeyboard = (e) => {
     if (e.key === 'Enter') {
       getSearchResult(searchType, e.target.value);
@@ -117,7 +126,7 @@ function HeaderSearchbar (isRecommend) {
 
   return (
     <HeaderSearchbarWrapper>
-      <div className={isRecommend.isRecommend ? 'searchbar' : 'display-none'}>
+      <div className={isRecommend ? `searchbar ${barState}` : 'display-none'}>
         <select className='searchbar-dropbox' onChange={handleSearchTypeChange}>
           {searchTypeList.map((searchType, idx) => <option value={searchTypeName[idx]} key={idx + 1}>{searchType}</option>)}
         </select>
@@ -130,7 +139,13 @@ function HeaderSearchbar (isRecommend) {
             onKeyPress={handleKeyboard}
           />
         </div>
-        {/* <button className='bnt searchbar-button' onClick={handleClick}>검색</button> */}
+      </div>
+      <div className={isRecommend && barState === 'bar-deactive' ? 'icon-active' : 'icon-deactive'}>
+        <img
+          className='search-icon-active'
+          src='/image/Search_Icon.svg'
+          alt='search-icon-active'
+          onClick={() => { handleMediaState(); handleBarState(); }} />
       </div>
     </HeaderSearchbarWrapper>
   );
