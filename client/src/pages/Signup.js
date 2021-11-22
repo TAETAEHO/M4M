@@ -1,12 +1,8 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { useState } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router';
-import { notify } from '../redux/action';
-import { useSelector, useDispatch } from 'react-redux';
 import { media } from '../components/utils/_media-queries';
 import { Colors } from '../components/utils/_var';
-// import m4mlogo from '../images/m4mlogo4.png';
 import m4mlogo from '../images/logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -26,7 +22,7 @@ export const SignupBackdrop = styled.div`
 `;
 export const SignupView = styled.div`
   box-sizing: border-box;
-  width: 20rem;
+  width: 20;
   height: 25rem;
   ${media.tabletMini`width: 22rem; height: 27rem;`}
   background-color: rgb(255, 255, 255);
@@ -54,7 +50,6 @@ export const SignupInputContainer = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  // border: 1px solid black;
   height: 60%;
 `;
 
@@ -76,41 +71,32 @@ export const SignupInput = styled.input`
 `;
 
 export const SignupButton = styled.button`
-  margin: 0rem .4rem .1rem .4rem;
+  margin: 0 .4rem .1rem .4rem;
   cursor: pointer;
-  font-family: 'Arial';
+  /* font-family: 'Arial'; */
   font-size: .9rem;
-  background-color: #caa6fe;
+  background-color: ${Colors.pastelPurple};
   width: 11.5rem;
   height: 2.2rem;
   border-radius: 7px;
   border: none;
   color: white;
   :hover {
-    background-color: #9c57ff;
+    background-color: ${Colors.purple};
   }
 `;
-
-function blinkEffect () {
-  return keyframes`
-  50% {
-    opacity:0;
-  }
-  `;
-}
 
 export const Alertbox = styled.div`
   color: red;
   margin-top: .5rem;
-  font-family: 'Arial';
+  /* font-family: 'Arial'; */
   font-size: .85rem;
-  /* animation: ${blinkEffect} 1s step-end infinite; */
 `;
 
 export const CheckInfo = styled.div`
   color: red;
   font-size: 11px;
-  font-family: 'Arial';
+  /* font-family: 'Arial'; */
   opacity: .7;
 `;
 
@@ -135,11 +121,11 @@ export const Select = styled.select`
 `;
 
 export const VerifyButton = styled.button`
-  margin: 0rem .4rem .1rem .4rem;
+  margin: 0 .4rem .1rem .4rem;
   cursor: pointer;
-  font-family: 'Arial';
+  /* font-family: 'Arial'; */
   font-size: 14px;
-  background-color: #caa6fe;
+  background-color: ${Colors.pastelPurple};
   background-color: transparent;
   border: none;
   color: white;
@@ -169,9 +155,6 @@ function Signup ({ handleModal, handleNotice, handleMessage }) {
   const [errorMsg, setErrorMsg] = useState('');
   const [code, setCode] = useState('');
   const [checkCode, setCheckCode] = useState(true);
-  const notiState = useSelector((state) => state.notiReducer).notifications;
-  const dispatch = useDispatch();
-  const history = useHistory();
 
   const handleInputValue = (key) => (e) => {
     setUserInfo({ ...userInfo, [key]: e.target.value });
@@ -186,8 +169,8 @@ function Signup ({ handleModal, handleNotice, handleMessage }) {
       setCheckNickname('올바른 한글 형식을 따라주세요');
     } else if (regExpSpec.test(e.target.value)) {
       setCheckNickname('특수문자를 포함하면 안됩니다.');
-    } else if (e.target.value.length < 2 || e.target.value.length > 15) {
-      setCheckNickname('닉네임은 2-15자입니다');
+    } else if (e.target.value.length < 2 || e.target.value.length > 8) {
+      setCheckNickname('닉네임은 2-8자입니다');
     } else {
       setCheckNickname('ok');
     }
@@ -288,10 +271,9 @@ function Signup ({ handleModal, handleNotice, handleMessage }) {
           setErrorMsg('메일이 오지 않았다면 스팸메일함을 확인해주세요');
         })
         .catch((error) => {
-          // console.log(error.response);
           if (error.response.data.message === 'conflict: email') {
             setErrorMsg('이미 가입된 이메일입니다');
-          }
+          } else console.log(error.response);
         });
     } else {
       setErrorMsg('올바른 이메일을 입력해주세요');
@@ -299,7 +281,7 @@ function Signup ({ handleModal, handleNotice, handleMessage }) {
   };
 
   const verifyCode = (e) => {
-    console.log(code === Number(e.target.value));
+    // console.log(code === Number(e.target.value));
     if (code === Number(e.target.value)) {
       setCheckCode(true);
     } else {
@@ -318,10 +300,8 @@ function Signup ({ handleModal, handleNotice, handleMessage }) {
           <SignupInput onChange={inputCheck('nickname')} placeholder='닉네임' />
           <CheckInfo>{checkNickname === 'ok' ? null : checkNickname}</CheckInfo>
           <SignupInput onChange={inputCheck('email')} placeholder='이메일' />
-          {/* <ButtonContainer> */}
           <CheckInfo>{checkEmail ? '  ' : '올바른 이메일 주소를 입력해주세요'}</CheckInfo>
           <VerifyButton onClick={emailRequest}>이메일 인증</VerifyButton>
-          {/* </ButtonContainer> */}
           <SignupInput onChange={verifyCode} placeholder='이메일 인증 코드' />
           <CheckInfo>{checkCode ? null : '코드가 일치하지 않습니다'}</CheckInfo>
           <SignupInput type='password' onChange={inputCheck('password')} placeholder='비밀번호' />

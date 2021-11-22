@@ -42,8 +42,8 @@
 ![](https://img.shields.io/badge/BACK-JWT-000000?style=for-the-badge&logo=json-web-tokens)  
 ![](https://img.shields.io/badge/BACK-OAUTH_2.0-000000?style=for-the-badge&logo=oauth-2.0)  
 
-## DISTRIBUTION
-![](https://img.shields.io/badge/DIST-AMAZON_AWS-232F3E?style=for-the-badge&logo=amazon-aws)  
+## DEPLOYMENT
+![](https://img.shields.io/badge/DEPLOY-AMAZON_AWS-232F3E?style=for-the-badge&logo=amazon-aws)  
 
 ## Detailed chart
 | Fields                              | Stacks                     |
@@ -54,8 +54,8 @@
 | **Data**   | MySQL, Sequelize |
 | **Auth**   | Oauth 2.0, JSON Web Token (JWT) |
 | **Email**   | Nodemailer |
-| **Distribution**   | AWS, EC2, S3, RDS, Route53 |
-| **Planning / Design**   | dbdiagram, GitBook, Figma, Photoshop, Illustrator |
+| **Deployment**   | AWS, EC2, S3, RDS, CodePipeline, CloudFront, Route53 |
+| **Planning / Design**   | dbdiagram.io, GitBook, Figma, Photoshop, Illustrator |
 | **Communication**   | Zoom, Discord |
 
 # Architecture
@@ -68,18 +68,26 @@
 <img width="750" alt="system-architecture" src="https://user-images.githubusercontent.com/29108753/136301752-3715769e-5c7f-4e04-a123-c3c5fb4dc126.png">
 
 # UI Design
-- [Full UI Design Link](https://github.com/codestates/M4M/wiki/UI-Design)
+[Full UI Design Link](https://github.com/codestates/M4M/wiki/UI-Design)
+
+**Mobile vs. Web**
+
+<img width="275" alt="landingmobile" src="https://user-images.githubusercontent.com/29108753/136686126-c25488f0-4b77-4ed0-b435-ce0a4b73a525.png">
+
+<br>
+
+<img width="608" alt="landingweb" src="https://user-images.githubusercontent.com/29108753/136661296-388f5fa7-9309-462e-b718-7765015a8510.png">
 
 # Highlighted Features
-- [기능 소개 Detail Link](https://github.com/codestates/M4M/wiki/UI-Design)
+[기능 소개 Detail Link](https://github.com/codestates/M4M/wiki/UI-Design)
 
-**Login**
+**Sign Up**
 
-<img src = "https://user-images.githubusercontent.com/29108753/136241112-320a8e43-9563-4aef-b234-e40f723f2eee.gif" width="650px">
+<img src = "https://user-images.githubusercontent.com/29108753/136779415-977b5b96-b575-4073-8f0c-d3d86e695738.gif" width="650px">
 
-**Music Search**
+**Kakao Login**
 
-<img src = "https://user-images.githubusercontent.com/29108753/136244044-abb7ecd1-958d-4e75-b279-2c7f408ae132.gif" width="650px">
+<img src = "https://user-images.githubusercontent.com/29108753/136777954-33947be6-114c-4792-9978-6c4b910c8855.gif" width="650px">
 
 **Music Filtering**
 
@@ -87,7 +95,7 @@
 
 **Music Recommendation**
 
-<img src = "https://user-images.githubusercontent.com/29108753/136246300-d58e748f-546b-4e43-87cc-f24af0dbab2f.gif" width="650px">
+<img src = "https://user-images.githubusercontent.com/29108753/136777322-554a48cf-ec1a-4629-b804-4d0ebf4a24fc.gif" width="650px">
 
 # Need More Information?
-- [Check out M4M wiki page!](https://github.com/codestates/M4M/wiki)
+[Check out M4M wiki page!](https://github.com/codestates/M4M/wiki)

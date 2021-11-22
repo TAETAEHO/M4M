@@ -20,21 +20,17 @@ const Wrapper = styled.div`
   .main {
     display: flex;
     min-height: calc(100vh - 41px - 56px);
-    font-family: 'Arial';
+    /* font-family: 'Arial'; */
   }
   .loading-container {
     margin: 0 1rem;
   }
   .container {
-    min-height: calc(100vh - 41px - 56px);
-    /* min-width: 320px;
-    max-width: 450px; */
     width: 95%;
-    margin-top: -1rem;
-    margin: 0 auto;
+    margin: -1rem auto 0;
     ${media.tabletMini`min-width: 460px; max-width: 750px; margin: 0 auto;`}
     ${media.tablet`width: 43rem; max-width: 1024px; margin: 0 auto;`}
-    ${media.laptop`width: 43rem; margin: 0 auto;`}
+    ${media.laptop`width: 43rem; margin: 1.3rem auto;`}
   }
   .space {
     height: 1rem;
@@ -64,7 +60,7 @@ const Wrapper = styled.div`
   }
   .title {
     margin: .3rem .15rem;
-    font-family: 'Arial';
+    /* font-family: 'Arial'; */
     font-size: .9rem;
     ${media.tabletMini`font-size: 1rem; padding-top: .2rem;`}
     ${media.tablet`font-size: 1.1rem;`}
@@ -73,7 +69,7 @@ const Wrapper = styled.div`
   .artist {
     margin-bottom: .5rem;
     margin-left: .3rem;
-    font-family: 'Arial';
+    /* font-family: 'Arial'; */
     font-size: .82rem;
     ${media.tabletMini`font-size: .87rem;`}
     ${media.tablet`font-size: .9rem;`}
@@ -95,7 +91,7 @@ const Wrapper = styled.div`
   .field {
     width: 4.3rem;
     text-align: left;
-    font-family: 'Arial';
+    /* font-family: 'Arial'; */
   }
   .lyrics-container > .field {
     margin-bottom: .8rem;
@@ -104,7 +100,7 @@ const Wrapper = styled.div`
   }
   .others {
     text-align: left;
-    font-family: 'Arial';
+    /* font-family: 'Arial'; */
     color: ${Colors.darkGray};
   }
   .bottom-container {
@@ -117,7 +113,7 @@ const Wrapper = styled.div`
   }
   .lyrics {
     text-align: left;
-    font-family: 'Arial';
+    /* font-family: 'Arial'; */
     font-size: .82rem;
     ${media.tabletMini`font-size: .87rem;`}
     line-height: 1.45rem;
@@ -133,7 +129,7 @@ const Wrapper = styled.div`
     background-color: transparent;
     border: none;
     line-height: 1rem;
-    font-family: 'Arial';
+    /* font-family: 'Arial'; */
     font-size: .7rem;
     ${media.tabletMini`font-size: .75rem;`}
     color: ${Colors.gray};
@@ -236,7 +232,7 @@ const SongDetail = ({ modal, handleMessage, handleNotice }) => {
               }}
             />
           </div>
-        </div>
+          </div>
         : <div className='container'>
           <div className='top-container'>
             <a href={songInfo.album_art} target='_blank' rel='noreferrer'>

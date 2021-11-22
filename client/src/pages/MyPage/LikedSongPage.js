@@ -18,11 +18,18 @@ const Wrapper = styled.div`
   }
   .main {
     display: inline-block;
+<<<<<<< HEAD
     ${media.tablet`display: flex`};
     min-height: calc(100vh - 62.39px - 129px);
     ${media.tabletMini`min-height: calc(100vh - 62.39px - 116px)`};
     ${media.tablet`min-height: calc(100vh - 62.39px - 71px)`};
     ${media.laptop`min-height: calc(100vh - 62.39px - 61px)`};
+=======
+    ${media.tablet`display: flex;`}
+    min-height: calc(100vh - 62.39px - 100px);
+    ${media.tablet`min-height: calc(100vh - 62.39px - 62px);`}
+    ${media.laptop`min-height: calc(100vh - 62.39px - 55px);`}
+>>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
   }
   .loading-container {
     padding-top: 2rem;
@@ -31,9 +38,12 @@ const Wrapper = styled.div`
   .songlist {
     margin: 0 auto;
     width: 98%;
-    max-width: 60rem;
-    ${media.tabletMini`padding-right: 0rem; width: 100%;`}
-    ${media.tablet`padding-right: 2rem;`}   
+    max-width: 58rem;
+    ${media.tabletMini`padding-right: 0rem; width: 97%;`}
+    ${media.tablet`padding-right: 2rem; margin: 0 0; max-width: 38rem;`}  
+    ${media.tablet`max-width: 50rem;`}  
+    ${media.laptop`max-width: 80vw; width: 80vw;`}
+    ${media.large`max-width: 85vw;`}
   }
   .scrollable::-webkit-scrollbar {
     height: 10px;
@@ -50,15 +60,15 @@ const Wrapper = styled.div`
   }
   .button-container {
     display: flex;
-    padding-top: .7rem;
-    margin: 0 1rem .2rem;
-    ${media.tabletMini`padding-top: 2rem; margin: -1rem 0 2rem;`}
-    ${media.tablet`margin: 0 1rem .2rem;`}
+    padding-top: 2rem;
+    margin: -1rem 0 .2rem;
+    width: 100%;
+    ${media.tabletMini`padding-top: 2rem; margin: -1rem 0 .2rem;`}
+    ${media.tablet`margin: 0 0 .2rem;`}
     justify-content: right;
-    width: 96%;
-    max-width: 60rem;
+    max-width: 58rem;
     text-align: right;
-    /* background-color: lime; */
+    ${media.laptop`max-width: 78vw; width: 78vw;`}
   }
   button {
     margin-left: auto;
@@ -77,7 +87,7 @@ const Wrapper = styled.div`
     margin: 0 auto;
     justify-content: center;
     align-items: center;
-    margin-bottom: -22px;
+    margin-bottom: -1.3rem;
     width: 100%;
   }
   .field-container > div, input {
@@ -86,15 +96,14 @@ const Wrapper = styled.div`
   .field {
     display: grid;
     width: 92%;
-    grid-template-columns: 15% 25% 23% 14% 12%;
-    ${media.tabletMini`grid-template-columns: 11% 32% 30% 12% 8%; width: 100%;`}
-    grid-gap: 8px;
+    grid-template-columns: 15% 27% 26% 15% 12%;
+    ${media.tabletMini`grid-template-columns: 11% 32% 30% 13% 8%; width: 100%;`}
+    ${media.tablet`grid-template-columns: 12% 32% 32% 12% auto; width: 100%;`}
     margin: .75rem auto 0;
     padding: .15rem .15rem;
     border: solid 1px ${Colors.lightGray};
     border-left: none;
     border-right: none;
-    /* background-color: salmon; */
   }
   .select-all,
   .select-one {
@@ -119,6 +128,7 @@ const Wrapper = styled.div`
     padding: auto;
     margin-left: .4rem;
     width: 100%;
+    ${media.tabletMini`margin-left: .6rem;`}
   }
   .song-container > div, input {
     margin: 0;
@@ -131,14 +141,13 @@ const Wrapper = styled.div`
   .song-info-container {
     display: grid;
     width: 92%;
-    grid-template-columns: 15% 25% 23% 14% 12%;
-    ${media.tabletMini`grid-template-columns: 11% 32% 30% 12% 8%; width: 100%;`}
-    grid-gap: 8px;
+    grid-template-columns: 15% 27% 26% 15% 12%;
+    ${media.tabletMini`grid-template-columns: 11% 32% 30% 13% 8%; width: 100%;`}
+    ${media.tablet`grid-template-columns: 12% 32% 32% 12% auto; width: 100%;`}
     margin: 0 auto;
     padding: .4rem .15rem;
     border-bottom: solid 1px ${Colors.lightGray};
     cursor: pointer;
-    /* background-color: lavender; */
   }
   .song-info-container > div:nth-child(-n+5) {
     margin-top: .3rem;
@@ -165,7 +174,7 @@ const Wrapper = styled.div`
   }
   .title {
     margin-left: .5rem;
-    /* background-color: pink; */
+    ${media.tabletMini`padding-left: .3rem;`}
   }
   .date, .like {
     color: ${Colors.gray};
@@ -175,6 +184,7 @@ const Wrapper = styled.div`
     margin-left: .4rem;
     grid-row: 2;
     grid-column: 2 / end;
+    ${media.tablet`padding-left: .3rem;`}
   }
   .message {
     margin-top: 1.2rem;
@@ -216,7 +226,6 @@ const GetLikedSong = ({ modal, handleMessage, handleNotice }) => {
       setIsLoading(true);
       try {
         if (parseInt(accessTokenTime, 10) + expiredTime - new Date().getTime() < 0) {
-          // alert('토큰이 만료되었습니다');
           modal();
           setIsLoading(false);
         } else {
@@ -268,7 +277,7 @@ const GetLikedSong = ({ modal, handleMessage, handleNotice }) => {
     }
   };
 
-  console.log('checked song id: ' + CheckList);
+  // console.log('checked song id: ' + CheckList);
 
   // Song Detail 페이지로 연결
   const handleSongClicked = (song) => {
@@ -279,7 +288,6 @@ const GetLikedSong = ({ modal, handleMessage, handleNotice }) => {
 
   const handleSongDelete = () => {
     if (parseInt(accessTokenTime, 10) + expiredTime - new Date().getTime() < 0) {
-      // alert('토큰이 만료되었습니다');
       modal();
     } else if (CheckList.length > 0) {
       axios
@@ -292,15 +300,11 @@ const GetLikedSong = ({ modal, handleMessage, handleNotice }) => {
             songId: CheckList
           }
         })
-        .then((res) => {
-          console.log(res.data.message);
-        })
         .then(() => {
           window.location.reload();
         })
         .catch(console.log);
     } else {
-      // alert('곡을 선택해주세요!');
       handleNotice(true);
       handleMessage('곡을 선택해주세요!');
     }

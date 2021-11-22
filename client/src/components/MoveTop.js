@@ -3,6 +3,7 @@ import { media } from '../components/utils/_media-queries';
 import { useState, useEffect } from 'react';
 
 const MoveTopWrapper = styled.div`
+  font-family: 'NeoDunggeunmo';
   .init {
     display: none;
   }
@@ -15,7 +16,7 @@ const MoveTopWrapper = styled.div`
   }
   .move-top {
     position: fixed;
-    left: 90%;
+    left: 92%;
     bottom: calc(112px + 10px);
     animation: vertical 1000ms ease-in-out infinite;
     cursor: pointer;

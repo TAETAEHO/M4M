@@ -20,11 +20,13 @@ import Notice from './components/Notice';
 import MediaSearchbar from './components/MediaSearchbar';
 
 const AppWrapper = styled.div`
-  * {
+  *, *:before, *:after {
     box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
   }
   .App {
-    font-family: 'NeoDunggeunmo';
+    font-family: 'Noto Sans KR', sans-serif;
     text-align: center;
   }
   .fixed-container {
@@ -48,7 +50,51 @@ function App() {
   const [mediaState, setMediaState] = useState('deactive');
   const [barState, setBarState] = useState('bar-active');
   const isLogin = useSelector((state) => state.userReducer).token;
+<<<<<<< HEAD
+=======
+  const [mediaState, setMediaState] = useState('deactive');
+  const [barState, setBarState] = useState('bar-active');
+>>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
   const [scrolled, setScrolled] = useState(false);
+
+  const maintainMediaState = () => {
+    if (window.innerWidth >= 768) setMediaState('deactive');
+  };
+
+  useEffect(() => window.addEventListener('resize', maintainMediaState));
+
+  const handleMediaState = () => {
+    if (mediaState === 'active') setMediaState('deactive');
+    if (mediaState === 'deactive') setMediaState('active');
+  };
+
+  const handleBarState = () => {
+    if (barState === 'bar-active') setBarState('bar-deactive');
+    if (barState === 'bar-deactive' && mediaState === 'deactive') setBarState('bar-active');
+  };
+
+  const handleSongMediaState = () => {
+    setMediaState('deactive');
+  };
+
+  const handleSongBarState = () => {
+    if (window.innerWidth < 768) setBarState('bar-deactive');
+  };
+
+  const resBarState = () => {
+    if (window.innerWidth < 768) setBarState('bar-deactive');
+  };
+
+  const maintainBarState = () => {
+    if (window.innerWidth >= 768) setBarState('bar-active');
+    else setBarState('bar-deactive');
+  };
+
+  useEffect(() => window.addEventListener('resize', maintainBarState));
+
+  useEffect(() => {
+    if (window.innerWidth < 768) setBarState('bar-deactive');
+  }, []);
 
   useEffect(() => {
     const handleScrolled = () => {
@@ -94,6 +140,7 @@ function App() {
     setOpenNotice(boolean);
   };
 
+<<<<<<< HEAD
   const maintainMediaState = () => {
     if (768 <= window.innerWidth) setMediaState('deactive');
   };
@@ -125,13 +172,23 @@ function App() {
     if (window.innerWidth < 768) setBarState('bar-deactive');
   }, []);
 
+=======
+>>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
   return (
     <BrowserRouter>
       <AppWrapper>
         <GlobalStyle />
         <div className='App'>
           <div className='fixed-container'>
+<<<<<<< HEAD
             <MediaSearchbar mediaState={mediaState} handleMediaState={handleMediaState} handleBarState={handleBarState} />
+=======
+            <MediaSearchbar
+              mediaState={mediaState}
+              handleMediaState={handleMediaState}
+              handleBarState={handleBarState}
+            />
+>>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
             <Header
               login={handleLoginModalOpen}
               signup={handleSignupModalOpen}
@@ -139,6 +196,11 @@ function App() {
               handleMessage={handleMessage}
               handleNotice={handleNotice}
               handleMediaState={handleMediaState}
+<<<<<<< HEAD
+=======
+              handleSongMediaState={handleSongMediaState}
+              handleSongBarState={handleSongBarState}
+>>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
               barState={barState}
               handleBarState={handleBarState}
               resBarState={resBarState}
@@ -150,7 +212,14 @@ function App() {
           <Switch>
             <Route exact path='/' component={Landing} />
             <Route path='/mainpage' component={Main} />
-            <Route path='/recommendpage' render={() => <Recommendation />} />
+            <Route
+              path='/recommendpage'
+              render={() =>
+                <Recommendation
+                  handleMessage={handleMessage}
+                  handleNotice={handleNotice}
+                />}
+            />
             <Route path='/mylike'>
               {isLogin
                 ? <GetLikedSong
@@ -182,8 +251,18 @@ function App() {
           </Switch>
           {openNotice
             ? (
+<<<<<<< HEAD
               <Notice message={message} login={handleLoginModalOpen} handleNotice={handleNotice} />
             )
+=======
+              <Notice
+                message={message}
+                login={handleLoginModalOpen}
+                handleNotice={handleNotice}
+                handleMessage={handleMessage}
+              />
+              )
+>>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
             : null}
           <MoveTop />
           <Footer />

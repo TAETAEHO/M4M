@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import intro_combine from '../images/Landing/intro_combine.png';
-// import feature_example from '../images/Landing/feature_example.png';
 import feature from '../images/Landing/Responsive.png';
-import example_gif from '../images/Landing/example_2_gif.webp';
 import recommend_gif from '../images/Landing/Landing1.gif';
 import song_detail_gif from '../images/Landing/Landing2.gif';
 import hashtag_like_gif from '../images/Landing/Landing3.gif';
@@ -16,6 +14,7 @@ import { useHistory } from 'react-router';
 import { useEffect, useState } from 'react';
 
 const LandingWrapper = styled.div`
+  font-family: 'NeoDunggeunmo';
   .landing {
     min-height: calc(100vh - 41px - 56px);
     display: flex;
@@ -46,7 +45,6 @@ const LandingWrapper = styled.div`
   }
   .content,
   .section {
-    /* border: 1px solid purple; */
     margin: 8px 12px;
     width: 100%;
     ${media.tabletMini`width: 480px;`}
@@ -54,15 +52,12 @@ const LandingWrapper = styled.div`
     ${media.laptop`width: 1024px;`}
   }
   .box {
-    /* border: 1px solid blue; */
     margin: 4px 6px;
     position: relative;
   }
   .btn {
-    /* background-color: #fffefa; */
     font-size: 1.25rem;
     font-weight: bolder;
-    /* color: #e5dcf2; */
     color: ${Colors.black};
     padding: 12px 16px;
     width: 100%;
@@ -230,9 +225,17 @@ function Landing () {
       if (window.scrollY > 4200) setFeatureImgState('feature-active');
       if (window.scrollY < 3800) setFeatureImgState('feature-deactive');
     }
-    if (window.innerWidth < 768) {
+    if (window.innerWidth >= 480 && window.innerWidth < 768) {
       if (window.scrollY > 3700) setFeatureImgState('feature-active');
       if (window.scrollY < 3300) setFeatureImgState('feature-deactive');
+    }
+    if (window.innerWidth >= 400 && window.innerWidth < 480) {
+      if (window.scrollY > 3300) setFeatureImgState('feature-active');
+      if (window.scrollY < 2900) setFeatureImgState('feature-deactive');
+    }
+    if (window.innerWidth < 400) {
+      if (window.scrollY > 3000) setFeatureImgState('feature-active');
+      if (window.scrollY < 2600) setFeatureImgState('feature-deactive');
     }
   };
 
@@ -278,7 +281,6 @@ function Landing () {
           <div className='box detail-1'>
             <div className='box detail-gif-container'>
               <img className='detail-gif' src={recommend_gif} alt='example_gif' />
-              {/* <img className='detail-gif' src={example_gif} alt='example_gif' /> */}
             </div>
             <div className='box content-main-empty' />
             <div className='box detail-text'>
@@ -314,14 +316,12 @@ function Landing () {
             </div>
             <div className='box content-main-empty' />
             <div className='box detail-gif-container'>
-              {/* <img className='detail-gif' src={example_gif} alt='example_gif' /> */}
               <img className='detail-gif' src={song_detail_gif} alt='example_gif' />
             </div>
           </div>
           <div className='box sub-empty' />
           <div className='box detail-3'>
             <div className='box detail-gif-container'>
-              {/* <img className='detail-gif' src={example_gif} alt='example_gif' /> */}
               <img className='detail-gif' src={hashtag_like_gif} alt='example_gif' />
             </div>
             <div className='box content-main-empty' />
@@ -360,7 +360,6 @@ function Landing () {
             </div>
             <div className='box content-main-empty' />
             <div className='box feature-image-container'>
-              {/* <img className={`test faeture-image ${featureImgState}`} src={feature_example} alt='feature_example'/> */}
               <img className={`test faeture-image ${featureImgState}`} src={feature} alt='feature_example' />
             </div>
           </div>
@@ -385,7 +384,7 @@ function Landing () {
                 클릭하고 추억 여행을 <br />
                 떠나볼까요?<br />
                 <br />
-                ₍₍ ◝&#40;・ω・&#41;◟ ⁾⁾
+                ヽ(o･ω･o)ﾉ♬
               </div>
             </div>
           </div>
