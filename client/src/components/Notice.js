@@ -1,9 +1,6 @@
 import styled from 'styled-components';
-import { LoginButton, ButtonContainer, CloseButton } from '../pages/Login';
-import m4mlogo from '../images/m4mlogo4.png';
 import axios from 'axios';
-import { changeHeader, userEdit } from '../redux/action';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { media } from '../components/utils/_media-queries';
@@ -38,10 +35,9 @@ export const NoticeView = styled.div`
   padding: .8rem;
 `;
 
-
 export const Message = styled.div`
   margin-top: ${props => props.topMargin};
-  font-family: 'Arial';
+  /* font-family: 'Arial'; */
   font-size: 1rem;
 `;
 
@@ -53,8 +49,8 @@ export const NoticeButton = styled.button`
   width: 6.5rem;
   height: 1.7rem;
   font-size: .85rem;
-  ${media.tabletMini`font-size: 1rem; width: 7rem;`}
-  font-family: 'Arial';
+  ${media.tabletMini`font-size: .9rem; width: 7rem;`}
+  /* font-family: 'Arial'; */
   color: white;
   cursor: pointer;
   :hover {
@@ -70,7 +66,7 @@ export const NoticeClose = styled.button`
   width: 7rem;
   height: 1.7rem;
   font-size: 1rem;
-  font-family: 'Arial';
+  /* font-family: 'Arial'; */
   color: white;
   cursor: pointer;
   :hover {
@@ -89,13 +85,13 @@ export const CloseIcon = styled.div`
 function Notice ({ message, login, handleNotice, handleMessage }) {
   useEffect(() => {
     const closeModal = (e) => {
-      if(e.keyCode === 27){
+      if (e.keyCode === 27) {
         handleNotice(false);
       }
-    }
-    window.addEventListener('keydown', closeModal)
-    return () => window.removeEventListener('keydown', closeModal)
-  }, [])
+    };
+    window.addEventListener('keydown', closeModal);
+    return () => window.removeEventListener('keydown', closeModal);
+  }, []);
 
   const token = useSelector((state) => state.userReducer).token;
 
@@ -111,7 +107,7 @@ function Notice ({ message, login, handleNotice, handleMessage }) {
       .then((res) => {
         if (res.status === 200) {
           handleNotice(true);
-          handleMessage('회원탈퇴가 완료되었습니다');
+          handleMessage('회원탈퇴가 완료되었습니다.');
           localStorage.clear();
         }
       });
@@ -129,11 +125,24 @@ function Notice ({ message, login, handleNotice, handleMessage }) {
             }}
           />
         </CloseIcon>
-        <Message topMargin={message === '정말 탈퇴 하시겠습니까?' ? '.5rem' : '1rem'}>
+        <Message
+          topMargin={
+            message === '정말 탈퇴 하시겠습니까?' ||
+            message === '로그인이 필요한 서비스입니다.' ||
+            message === '로그인 성공!' ||
+            message === '로그아웃 성공!' ||
+            message === '회원가입 성공!' ||
+            message === '회원탈퇴가 완료되었습니다.'
+              ? '.4rem'
+              : message === '출생년도 등록이 필요한 서비스입니다.'
+                ? '.3rem'
+                : '1rem'
+          }
+        >
           {message}
         </Message>
-        <ButtonContainer>
-          {message === '로그인이 필요한 서비스입니다.' ? (
+        {message === '로그인이 필요한 서비스입니다.'
+          ? (
             <div>
               <div>
                 <NoticeButton
@@ -146,10 +155,12 @@ function Notice ({ message, login, handleNotice, handleMessage }) {
                 </NoticeButton>
               </div>
             </div>
-          ) : message === '로그인 성공!' ||
-            message === '로그아웃 성공!' ||
-            message === '회원가입 성공!' ||
-            message === '회원탈퇴가 완료되었습니다' ? (
+            )
+          : message === '로그인 성공!' ||
+          message === '로그아웃 성공!' ||
+          message === '회원가입 성공!' ||
+          message === '회원탈퇴가 완료되었습니다.'
+            ? (
               <NoticeButton
                 onClick={() => {
                   window.location.replace('/mainpage');
@@ -157,36 +168,32 @@ function Notice ({ message, login, handleNotice, handleMessage }) {
               >
                 메인화면으로
               </NoticeButton>
-              ) : message === '출생년도 등록이 필요한 서비스입니다.' ? (
-                <>
-                  <div>
-                    <NoticeButton
-                      onClick={() => {
-                        window.location.replace('/myinfo');
-                      }}
-                    >
-                      마이페이지로
-                    </NoticeButton>
-                  </div>
-                </>
-              ) : message === '회원정보가 수정되었습니다.' ? (
-                <NoticeClose
-                  onClick={() => {
-                    window.location.replace('/myinfo');
-                  }}
-                >
-                  확인
-                </NoticeClose>
-              ) : message === '정말 탈퇴 하시겠습니까?' ? (
+              )
+            : message === '출생년도 등록이 필요한 서비스입니다.'
+              ? (
                 <div>
-                  <div>
-                    <NoticeButton onClick={withdrawalRequest}>탈퇴하기</NoticeButton>
-                  </div>
+                  <NoticeButton
+                    onClick={() => {
+                      window.location.replace('/myinfo');
+                    }}
+                  >
+                    마이페이지로
+                  </NoticeButton>
                 </div>
-              ) : (
-                null
-              )}
-        </ButtonContainer>
+                )
+              : message === '회원정보가 수정되었습니다.'
+                ? (
+                  <NoticeClose
+                    onClick={() => {
+                      window.location.replace('/myinfo');
+                    }}
+                  >
+                    확인
+                  </NoticeClose>
+                  )
+                : message === '정말 탈퇴 하시겠습니까?'
+                  ? <NoticeButton onClick={withdrawalRequest}>탈퇴하기</NoticeButton>
+                  : null}
       </NoticeView>
     </NoticeBackdrop>
   );

@@ -4,8 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { changeType } from '../redux/action';
 import { useDispatch, useSelector } from 'react-redux';
 import { Colors } from '../components/utils/_var';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { media } from '../components/utils/_media-queries';
 
 const SideNavWrapper = styled.div`
@@ -14,18 +14,23 @@ const SideNavWrapper = styled.div`
     min-height: 100%;
   }
   .menu-container {
-    margin-top: .8rem;
+    margin: .8rem auto -1rem;
+    width: 100vw;
     background-color: ${Colors.lightGray};
     min-width: 12rem;
     ${media.tablet`display: none;`};
+    cursor: pointer;
+    &:hover .menu {
+      background-color: #caa6fe;
+      color: white;
+    }
     &:hover {
       background-color: #caa6fe;
     }
   }
   .menu {
     margin: 8px 12px;
-    /* margin: 8px; */
-    color: gray;
+    color: ${Colors.mediumGray};
   }
   .main-deactive {
     display: none;
@@ -65,7 +70,7 @@ const SideNavWrapper = styled.div`
 const Item = styled.div`
   margin: 0px 12px 14px;
   padding: 8px 20px 0;
-  font-family: 'Arial';
+  /* font-family: 'Arial'; */
   color: ${Colors.darkGray};
   cursor: pointer;
   font-size: 1.05rem;
@@ -89,7 +94,7 @@ const SubItem = styled.div`
   left: 30px;
   margin: 0px 18px;
   padding: 8px 12px;
-  font-family: 'Arial';
+  /* font-family: 'Arial'; */
   font-size: .9rem;
   color: ${Colors.darkGray};
   cursor: pointer;
@@ -147,7 +152,14 @@ function SideNav () {
   };
 
   const maintainNavState = () => {
+<<<<<<< HEAD
     if (768 <= window.innerWidth ) setNavState('active');
+=======
+    if (window.innerWidth >= 768) {
+      if (navState === 'active') setNavState('active');
+    } else setNavState('deactive');
+    if (window.innerWidth >= 768) setNavState('active');
+>>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
     else setNavState('deactive');
   };
 
@@ -161,7 +173,9 @@ function SideNav () {
     <SideNavWrapper>
       <div className='contents-container'>
         <div className='menu-container' onClick={handleNavState}>
-          <FontAwesomeIcon className='menu' icon={faBars} size='2x' />
+          {navState === 'deactive'
+            ? <FontAwesomeIcon className='menu' icon={faBars} size='2x' />
+            : <FontAwesomeIcon className='menu' icon={faTimes} size='2x' />}
         </div>
         <div className={`sidenav ${navState}`}>
           {/* history 값이 mainpage일 때, 다른 값 보여주기 */}

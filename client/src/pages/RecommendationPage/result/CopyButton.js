@@ -3,19 +3,19 @@ import { media } from '../../../components/utils/_media-queries';
 import { Colors } from '../../../components/utils/_var';
 
 const Button = styled.div`
-  width: 9rem;
+  width: 9.5rem;
+  height: 3rem;
   margin: .6rem auto 1.7rem;
-  padding: .8rem 1rem;
-  /* background-color: #553830; */
+  padding: 1rem 1rem;
+  vertical-align: middle;
   color: ${Colors.black};
   background-color: ${Colors.pastelPurple};
   color: white;
-  background-color: ${Colors.purple};
   border-radius: 7px;
   border: none;
   font-family: 'Arial';
   font-size: .75rem;
-  ${media.tablet`font-size: .8em; width: 9.5rem;`}
+  ${media.tablet`font-size: .8em; width: 10rem;`}
 
   &:hover {
     cursor: pointer;
@@ -24,7 +24,7 @@ const Button = styled.div`
   }    
 `;
 
-const CopyButton = ({ songType, songList }) => {
+const CopyButton = ({ songType, songList, handleNotice, handleMessage }) => {
   let copySongType = '나의 타입: ' + songType.name;
   let copySongList = [...songList];
 
@@ -36,20 +36,19 @@ const CopyButton = ({ songType, songList }) => {
 
   copySongType += '\n\n' + '추천 노래:\n' + copySongList;
 
-  // console.log(copySongType);
-  // console.log(copySongList);
-
   const copyResult = text => {
     navigator.clipboard.writeText(text).then(() => {
-      alert('추천 결과가 클립보드에 복사되었습니다.');
+      handleNotice(true);
+      handleMessage('추천 결과가 클립보드에 복사되었습니다.');
     }, () => {
-      alert('복사하기가 지원되지 않는 브라우저입니다.');
+      handleNotice(true);
+      handleMessage('복사하기가 지원되지 않는 브라우저입니다.');
     });
   };
 
   return (
     <Button onClick={() => copyResult(copySongType)}>
-      📋 추천 결과 복사하기
+      추천 결과 복사하기
     </Button>
   );
 };

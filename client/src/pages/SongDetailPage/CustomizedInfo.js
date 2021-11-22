@@ -19,7 +19,7 @@ const Wrapper = styled.div`
     margin: 1rem auto .5rem;
     color: ${Colors.gray};
     text-align: center;
-    font-family: 'Arial';
+    /* font-family: 'Arial'; */
     font-size: .8rem;
     width: fit-content;
     border-bottom: solid 1px ${Colors.borderColor};
@@ -29,7 +29,7 @@ const Wrapper = styled.div`
   }
   .content {
     text-align: center;
-    font-family: 'Arial';
+    /* font-family: 'Arial'; */
     color: ${Colors.darkGray};
   }
 `;
@@ -58,24 +58,14 @@ const AgeContainer = styled.div`
 const CustomizedInfo = ({ songInfo, handleMessage, handleNotice }) => {
   const token = useSelector((state) => state.userReducer).token;
   const { birthYear, kakao } = useSelector((state) => state.userReducer).userInfo;
-
-  let age = '?';
   const chartYear = songInfo.date ? songInfo.date.split('.')[0] : null;
   const topSongs = Chart[0][`${chartYear}년`];
-  // console.log(topSongs);
+
+  let age = '?';
 
   if (token && birthYear && songInfo.year) {
-    // VALID CODE NOT FOR TESTING
     age = songInfo.year - birthYear + 1;
-    // console.log(birthYear);
-
-    // JUST FOR TEST PURPOSES
-    // const fakeBY = 2000;
-    // age = songInfo.year - fakeBY + 1;
-
-    if (age < 1) {
-      age = -1;
-    }
+    if (age < 1) age = -1;
   }
 
   const handleYearClicked = () => {
@@ -102,8 +92,8 @@ const CustomizedInfo = ({ songInfo, handleMessage, handleNotice }) => {
         {chartYear &&
           topSongs.map((song, idx) => {
             return (
-              <ChartBox>
-                <div className='content chart-title'>{idx + 1}. {song.title}</div>
+              <ChartBox key={idx + 1}>
+                <div className='content chart-title' key={idx}>{idx + 1}. {song.title}</div>
                 <div className='content chart-artist'>{song.artist}</div>
               </ChartBox>
             );
