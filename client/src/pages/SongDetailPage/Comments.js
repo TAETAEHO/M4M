@@ -16,7 +16,7 @@ const Wrapper = styled.div`
     ${media.tabletMini`min-width: 470px; max-width: 750px;`}
     ${media.tablet`width: 41.7rem; max-width: 1024px;`}
     text-align: left;
-    font-family: 'Arial';
+    /* font-family: 'Arial'; */
     font-size: .9rem;
     color: ${Colors.darkGray};
   }
@@ -31,6 +31,7 @@ const Wrapper = styled.div`
   }
   .comments-input-container {
     display: grid;
+    justify-content: center;
     grid-template-columns: 85% 10%;
     grid-column-gap: 8px;
     margin: .5rem auto;
@@ -39,7 +40,6 @@ const Wrapper = styled.div`
     ${media.tabletMini`min-width: 470px; max-width: 750px; margin: 1rem auto;`}
     ${media.tablet`width: 41.7rem; max-width: 1024px;`}
     ${media.laptop`width: 41.7rem;`}
-    justify-content: center;
   }
   .postButton {
     height: 3.5rem;
@@ -64,7 +64,7 @@ const Wrapper = styled.div`
     background: -moz-linear-gradient(top, #ededed, #fff);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#ffffff');
   }
-  button:hover {
+  button {
     cursor: pointer;
   }
   textarea {
@@ -97,11 +97,9 @@ const Comments = ({ comments, songId, modal, handleMessage, handleNotice }) => {
 
   const handleCommentChange = (e) => {
     if (!token) {
-      // alert('로그인이 필요한 서비스입니다.');
       handleNotice(true);
       handleMessage('로그인이 필요한 서비스입니다');
     } else if (e.target.value.length > 300) {
-      // alert('댓글은 300자 이내로 입력해주세요.');
       handleNotice(true);
       handleMessage('댓글은 300자 이내로 입력해주세요');
     } else {
@@ -113,26 +111,20 @@ const Comments = ({ comments, songId, modal, handleMessage, handleNotice }) => {
   };
 
   const waitTime = 60000; // 1 minute
-  // let waitTime = 10000; // 10 sec for testing
   const initialTime = localStorage.getItem('initialTime');
 
   const handlePostClicked = () => {
     if (!token) {
-      // alert('로그인이 필요한 서비스입니다.');
       handleNotice(true);
-      handleMessage('로그인이 필요한 서비스입니다');
-    }
-    if (parseInt(accessTokenTime, 10) + expiredTime - new Date().getTime() < 0) {
-      // alert('토큰이 만료되었습니다');
+      handleMessage('로그인이 필요한 서비스입니다.');
+    } else if (parseInt(accessTokenTime, 10) + expiredTime - new Date().getTime() < 0) {
       modal();
     } else if (!initialTime || parseInt(initialTime, 10) + waitTime - new Date().getTime() < 0) {
       // console.log('nickname: ', information.nickname, 'content: ', newComment);
       if (newContent.length > 300) {
-        // alert('댓글은 300자 이내로 입력해주세요.');
         handleNotice(true);
         handleMessage('댓글은 300자 이내로 입력해주세요');
       } else if (newContent.length === 0) {
-        // alert('댓글을 입력해주세요');
         handleNotice(true);
         handleMessage('댓글을 입력해주세요');
       } else {
@@ -154,7 +146,6 @@ const Comments = ({ comments, songId, modal, handleMessage, handleNotice }) => {
             if (res.status === 200) {
               // 클라이언트쪽에서 댓글 시간 제한 처리
               localStorage.setItem('initialTime', new Date().getTime());
-              // alert('댓글이 등록되었습니다.');
               setNewComment({
                 newContent: ''
               });
@@ -166,16 +157,13 @@ const Comments = ({ comments, songId, modal, handleMessage, handleNotice }) => {
             if (err.response.status === 409) {
               handleNotice(true);
               handleMessage('댓글은 중복 입력하실 수 없습니다');
-              // alert('댓글은 중복 입력하실 수 없습니다');
             } else if (err.response.data.message === 'Already reached the limit') {
-              // alert('댓글은 한 곡당 50개로 제한됩니다.');
               handleNotice(true);
               handleMessage('댓글은 한 곡당 50개로 제한됩니다');
             }
           });
       }
     } else {
-      // alert('도배글 등을 방지하기 위해 1분간 사용이 제한됩니다.\n잠시 후 다시 시도해주세요.');
       handleNotice(true);
       handleMessage('도배글 방지를 위해 1분간 사용이 제한되니 잠시 후 다시 시도해주세요');
       setNewComment({

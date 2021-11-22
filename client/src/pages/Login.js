@@ -1,21 +1,18 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { useState } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router';
-// import kakaoImage from '../images/kakao_login_medium_narrow.png';
-import kakaoLogo from '../images/kakao_logo.png';
-// import m4mlogo from '../images/m4mlogo4.png';
 import m4mlogo from '../images/logo.png';
+import kakaoLogo from '../images/kakao_logo.png';
 import { useDispatch } from 'react-redux';
-import { notify, userLogin } from '../redux/action';
+import { userLogin } from '../redux/action';
 import { media } from '../components/utils/_media-queries';
 import { Colors } from '../components/utils/_var';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-
-require('dotenv').config();
-const { Kakao } = window;
 axios.defaults.withCredentials = true;
+require('dotenv').config();
+
+const { Kakao } = window;
 
 export const LoginBackdrop = styled.div`
   position: fixed;
@@ -47,9 +44,15 @@ export const LoginView = styled.div`
   }
 
   .signup {
+<<<<<<< HEAD
     font-size: 0.85rem;
     margin: 0.9rem 0.4rem 0 0;
     font-family: 'Arial';
+=======
+    font-size: .85rem;
+    margin: .9rem .4rem 0 0;
+    /* font-family: 'Arial'; */
+>>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
     color: ${Colors.gray};
   }
 `;
@@ -87,6 +90,7 @@ export const LoginInput = styled.input`
   }
 `;
 
+<<<<<<< HEAD
 function blinkEffect() {
   return keyframes`
   50% {
@@ -100,42 +104,57 @@ export const Alertbox = styled.div`
   font-family: 'Arial';
   font-size: 0.9rem;
   margin-top: 0.8rem;
+=======
+export const Alertbox = styled.div`
+  color: red;
+  /* font-family: 'Arial'; */
+  font-size: .9rem;
+  margin-top: .8rem;
+>>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
 `;
 
 export const LoginButton = styled.button`
   margin: 0.2rem 0.4rem 0;
   cursor: pointer;
+<<<<<<< HEAD
   font-family: 'Arial';
   font-size: 0.9rem;
+=======
+  /* font-family: 'Arial'; */
+  font-size: .9rem;
+>>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
   ${media.tablet`font-size: .9rem;`}
-  background-color: #caa6fe;
+  background-color: ${Colors.pastelPurple};
   width: 12.2rem;
   height: 2.5rem;
   border-radius: 7px;
   border: none;
   color: white;
   :hover {
-    background-color: #9c57ff;
+    background-color: ${Colors.purple};
   }
-`;
-
-export const ButtonContainer = styled.div`
-  // margin: 10px;
-  // border: 1px solid black;
 `;
 
 export const KakaoButton = styled.div`
   width: 12.2rem;
   height: 2.5rem;
+<<<<<<< HEAD
   margin: 0.6rem auto;
   padding: 0.7rem 0.2rem 0.7rem 0;
+=======
+  margin: .6rem auto;
+  padding: .3rem .2rem .3rem 0;
+  ${media.tabletMini`padding: .7rem .2rem .7rem 0;`}
+  ${media.tabletMini`padding: .37rem .2rem .37rem 0;`}
+
+>>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
   background-color: #fee500;
   border-radius: 7px;
   border: none;
+  cursor: pointer;
 
   &:hover {
-    cursor: pointer;
-    background-color: #ffd500;
+    background-color: #edc707;
   }
 
   img {
@@ -148,18 +167,27 @@ export const KakaoContent = styled.div`
   display: inline-block;
   vertical-align: middle;
   margin: auto 1.8rem auto 0;
+<<<<<<< HEAD
   font-family: 'Arial';
   font-size: 0.9rem;
+=======
+  /* font-family: 'Arial'; */
+  font-size: .9rem;
+>>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
   ${media.tablet`font-size: .9rem;`}
   color: #000000 85%;
 `;
 
 export const SignupSpan = styled.span`
+<<<<<<< HEAD
   font-size: 0.85rem;
   color: #9c57ff;
+=======
+  font-size: .85rem;
+  color: ${Colors.purple};
+>>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
   cursor: pointer;
-  font-family: 'Arial';
-  /* font-weight: bold; */
+  /* font-family: 'Arial'; */
   :hover {
     color: #7b3cd6;
   }
@@ -171,7 +199,6 @@ function Login({ handleModal, signup, handleMessage, handleNotice }) {
     password: ''
   });
   const [errorMsg, setErrorMsg] = useState(' ');
-  const history = useHistory();
   const dispatch = useDispatch();
 
   const handleInputValue = (key) => (e) => {
@@ -284,8 +311,12 @@ function Login({ handleModal, signup, handleMessage, handleNotice }) {
         <CloseIcon>
           <FontAwesomeIcon icon={faTimes} color={Colors.gray} onClick={handleModal} />
         </CloseIcon>
+<<<<<<< HEAD
         {/* <img src={m4mlogo} style={{ width: '200px' }} /> */}
         <img className="logo" src={m4mlogo} />
+=======
+        <img className='logo' src={m4mlogo} alt='logo' />
+>>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
         <LoginInputContainer>
           <LoginInput onChange={handleInputValue('email')} placeholder="이메일" />
           <LoginInput
@@ -297,9 +328,7 @@ function Login({ handleModal, signup, handleMessage, handleNotice }) {
             placeholder="비밀번호"
           />
         </LoginInputContainer>
-        <ButtonContainer>
-          <LoginButton onClick={handleLoginRequest}>로그인</LoginButton>
-        </ButtonContainer>
+        <LoginButton onClick={handleLoginRequest}>로그인</LoginButton>
         <KakaoButton onClick={kakaoLogin}>
           <img src={kakaoLogo} alt="kakao-logo" width="20px" />
           <KakaoContent>카카오 로그인</KakaoContent>
