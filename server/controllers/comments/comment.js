@@ -1,55 +1,48 @@
-const { song, comment } = require("../../models");
-const { isAuthorized } = require("../tokenFunctions");
+const { comment } = require('../../models');
+const { isAuthorized } = require('../tokenFunctions');
 
 module.exports = async (req, res) => {
   try {
-    // 곡의 id
-    const { id, content } = req.body;
     // 로그인 된 유저인지 확인
     const accessTokenData = isAuthorized(req);
 
     if (!accessTokenData) {
-      return res.status(403).json({ message: "plz login first" });
+      return res.status(401).json({ message: "You're not logged in" });
     } else {
-      const songId = await song.findOne({
-        where: {
-          id: id,
-        },
-      });
+      const { songId, content } = req.body;
 
-      const userContent = await comment.findAll({
+      const userComments = await comment.findAll({
         where: {
           userId: accessTokenData.id,
-          songId: songId.dataValues.id,
-        },
+          songId: songId
+        }
       });
 
-      if (userContent.length >= 50) {
-        return res.status(400).json({ message: "already reached the limit" });
+      if (userComments.length >= 50) {
+        return res.status(400).json({ message: 'Already reached the limit' });
       }
 
       const newContent = await comment.findOne({
         where: {
-          songId: songId.dataValues.id,
-          content: content,
-        },
+          userId: accessTokenData.id,
+          songId: songId,
+          content: content
+        }
       });
 
       if (newContent) {
-        return res
-          .status(400)
-          .json({ message: "you can not write same comment" });
+        return res.status(409).json({ message: 'You cannot write the same comment' });
       }
 
       await comment.create({
         userId: accessTokenData.id,
-        songId: songId.dataValues.id,
-        content: content,
+        songId: songId,
+        content: content
       });
 
-      return res.status(200).json({ message: "ok" });
+      return res.status(200).json({ message: 'ok' });
     }
   } catch {
-    res.status(400).json({ message: "error" });
+    res.status(400).json({ message: 'error' });
   }
 };
