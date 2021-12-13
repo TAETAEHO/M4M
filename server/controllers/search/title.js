@@ -51,32 +51,30 @@ module.exports = {
               // console.log("++++++++++++++++++\n", song.id);
               try {
                 let getHashtagName = await songuserhashtaglike.findAll({
-                  include: [{
-                    model: hashtaglike,
-                    attributes: ['name']
-                  }],
+                  include: [
+                    {
+                      model: hashtaglike,
+                      attributes: ['name']
+                    }
+                  ],
                   where: {
                     songId: song.id
                   }
                 });
 
                 getHashtagName = Sequelize.getValues(getHashtagName);
-                // console.log(getHashtagName);
 
                 const hashtaglikeCount = {
                   좋아요: 0
                 };
 
                 getHashtagName.map((song) => {
-                  // console.log(song.hashtaglike.name);
                   if (hashtaglikeCount[song.hashtaglike.name]) {
                     hashtaglikeCount[song.hashtaglike.name] += 1;
                   } else {
                     hashtaglikeCount[song.hashtaglike.name] = 1;
                   }
                 });
-
-                // console.log(hashtaglikeCount);
 
                 return {
                   id: song.id,
@@ -92,7 +90,6 @@ module.exports = {
             });
 
             const results = await Promise.all(songInfo);
-            // console.log(results);
 
             res.status(200).json({
               data: results,
