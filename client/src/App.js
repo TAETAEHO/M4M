@@ -20,7 +20,9 @@ import Notice from './components/Notice';
 import MediaSearchbar from './components/MediaSearchbar';
 
 const AppWrapper = styled.div`
-  *, *:before, *:after {
+  *,
+  *:before,
+  *:after {
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -50,11 +52,6 @@ function App() {
   const [mediaState, setMediaState] = useState('deactive');
   const [barState, setBarState] = useState('bar-active');
   const isLogin = useSelector((state) => state.userReducer).token;
-<<<<<<< HEAD
-=======
-  const [mediaState, setMediaState] = useState('deactive');
-  const [barState, setBarState] = useState('bar-active');
->>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
   const [scrolled, setScrolled] = useState(false);
 
   const maintainMediaState = () => {
@@ -140,7 +137,6 @@ function App() {
     setOpenNotice(boolean);
   };
 
-<<<<<<< HEAD
   const maintainMediaState = () => {
     if (768 <= window.innerWidth) setMediaState('deactive');
   };
@@ -150,16 +146,16 @@ function App() {
   const handleMediaState = () => {
     if (mediaState === 'active') setMediaState('deactive');
     if (mediaState === 'deactive') setMediaState('active');
-  }
+  };
 
   const handleBarState = () => {
     if (barState === 'bar-active') setBarState('bar-deactive');
     if (barState === 'bar-deactive' && mediaState === 'deactive') setBarState('bar-active');
-  }
+  };
 
   const resBarState = () => {
     if (window.innerWidth < 768) setBarState('bar-deactive');
-  }
+  };
 
   const maintainBarState = () => {
     if (768 <= window.innerWidth) setBarState('bar-active');
@@ -172,23 +168,17 @@ function App() {
     if (window.innerWidth < 768) setBarState('bar-deactive');
   }, []);
 
-=======
->>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
   return (
     <BrowserRouter>
       <AppWrapper>
         <GlobalStyle />
-        <div className='App'>
-          <div className='fixed-container'>
-<<<<<<< HEAD
-            <MediaSearchbar mediaState={mediaState} handleMediaState={handleMediaState} handleBarState={handleBarState} />
-=======
+        <div className="App">
+          <div className="fixed-container">
             <MediaSearchbar
               mediaState={mediaState}
               handleMediaState={handleMediaState}
               handleBarState={handleBarState}
             />
->>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
             <Header
               login={handleLoginModalOpen}
               signup={handleSignupModalOpen}
@@ -196,50 +186,48 @@ function App() {
               handleMessage={handleMessage}
               handleNotice={handleNotice}
               handleMediaState={handleMediaState}
-<<<<<<< HEAD
-=======
-              handleSongMediaState={handleSongMediaState}
-              handleSongBarState={handleSongBarState}
->>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
               barState={barState}
               handleBarState={handleBarState}
               resBarState={resBarState}
             />
           </div>
-          <div className='space' />
+          <div className="space" />
           {openModal ? <Modal handleModal={handleModalClose} login={handleLoginModalOpen} /> : null}
           <Noti />
           <Switch>
-            <Route exact path='/' component={Landing} />
-            <Route path='/mainpage' component={Main} />
+            <Route exact path="/" component={Landing} />
+            <Route path="/mainpage" component={Main} />
             <Route
-              path='/recommendpage'
-              render={() =>
-                <Recommendation
-                  handleMessage={handleMessage}
-                  handleNotice={handleNotice}
-                />}
+              path="/recommendpage"
+              render={() => (
+                <Recommendation handleMessage={handleMessage} handleNotice={handleNotice} />
+              )}
             />
-            <Route path='/mylike'>
-              {isLogin
-                ? <GetLikedSong
+            <Route path="/mylike">
+              {isLogin ? (
+                <GetLikedSong
                   modal={handleModalOpen}
                   handleMessage={handleMessage}
                   handleNotice={handleNotice}
                 />
-                : <Redirect to='/' />}
+              ) : (
+                <Redirect to="/" />
+              )}
             </Route>
-            <Route path='/myinfo'>
-              {isLogin
-                ? <Mypage
+            <Route path="/myinfo">
+              {isLogin ? (
+                <Mypage
                   modal={handleModalOpen}
                   handleMessage={handleMessage}
                   handleNotice={handleNotice}
                 />
-                : <Redirect to='/' />}
+              ) : (
+                <Redirect to="/" />
+              )}
             </Route>
             <Route
-              path='/song:id' render={() => (
+              path="/song:id"
+              render={() => (
                 <SongDetail
                   modal={handleModalOpen}
                   handleMessage={handleMessage}
@@ -247,44 +235,28 @@ function App() {
                 />
               )}
             />
-            <Redirect to='/' />
+            <Redirect to="/" />
           </Switch>
-          {openNotice
-            ? (
-<<<<<<< HEAD
-              <Notice message={message} login={handleLoginModalOpen} handleNotice={handleNotice} />
-            )
-=======
-              <Notice
-                message={message}
-                login={handleLoginModalOpen}
-                handleNotice={handleNotice}
-                handleMessage={handleMessage}
-              />
-              )
->>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
-            : null}
+          {openNotice ? (
+            <Notice message={message} login={handleLoginModalOpen} handleNotice={handleNotice} />
+          ) : null}
           <MoveTop />
           <Footer />
-          {openSignup
-            ? (
-              <Signup
-                handleModal={handleSignupModalClose}
-                handleMessage={handleMessage}
-                handleNotice={handleNotice}
-              />
-            )
-            : null}
-          {openLogin
-            ? (
-              <Login
-                handleModal={handleLoginModalClose}
-                signup={handleSignupModalOpen}
-                handleMessage={handleMessage}
-                handleNotice={handleNotice}
-              />
-            )
-            : null}
+          {openSignup ? (
+            <Signup
+              handleModal={handleSignupModalClose}
+              handleMessage={handleMessage}
+              handleNotice={handleNotice}
+            />
+          ) : null}
+          {openLogin ? (
+            <Login
+              handleModal={handleLoginModalClose}
+              signup={handleSignupModalOpen}
+              handleMessage={handleMessage}
+              handleNotice={handleNotice}
+            />
+          ) : null}
         </div>
       </AppWrapper>
     </BrowserRouter>
