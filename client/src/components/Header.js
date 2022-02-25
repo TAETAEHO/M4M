@@ -30,13 +30,12 @@ const HeaderWrapper = styled.div`
     ${media.tabletMini`background-color: lavender;`}
     ${media.tablet`background-color: orchid;`}
     ${media.laptop`background-color: lime;`} */
-
   }
   .header-container-1 {
     grid-area: logo;
     text-align: left;
     width: 100%;
-    padding-left: .5rem;
+    padding-left: 0.5rem;
     max-width: 8rem;
     ${media.tabletMini`padding-left: 1rem;`}
     ${media.tablet`width: 8rem; padding-left: 1.2rem;`}
@@ -56,7 +55,7 @@ const HeaderWrapper = styled.div`
   .header-container-3 {
     grid-area: search;
     text-align: right;
-    padding-top: .4rem;
+    padding-top: 0.4rem;
     justify-self: end;
     text-align: right;
     ${media.tabletMini`width: 5rem`}
@@ -69,10 +68,9 @@ const HeaderWrapper = styled.div`
     justify-self: end;
     width: 100%;
     padding-right: 0;
-    margin-top: -.2rem;
+    margin-top: -0.2rem;
     /* ${media.tabletMini`width: margin-right: 1rem`} */
-    ${media.tablet`width: 11rem; padding-right: 1rem; width: 100%;`}
-    /* background-color: lavenderblush; */
+    ${media.tablet`width: 11rem; padding-right: 1rem; width: 100%;`}/* background-color: lavenderblush; */
   }
   a {
     text-decoration: none;
@@ -81,8 +79,8 @@ const HeaderWrapper = styled.div`
     font-size: 1.2rem;
   }
   .logo-image {
-    padding-left: .7rem;
-    padding-top: .2rem;
+    padding-left: 0.7rem;
+    padding-top: 0.2rem;
     width: 4.75rem;
     ${media.tabletMini`width: 5rem;`}
   }
@@ -93,7 +91,7 @@ const HeaderWrapper = styled.div`
   }
   .recommend-page {
     color: ${Colors.darkGray};
-    font-size: .8rem;
+    font-size: 0.8rem;
     font-family: 'Noto Sans KR', sans-serif;
     ${media.tabletMini`font-size: .85rem;`}
     ${media.tablet`font-size: .9rem;`}
@@ -103,9 +101,9 @@ const HeaderWrapper = styled.div`
   .logout,
   .signup,
   .mypage {
-    font-size: .65rem;
+    font-size: 0.65rem;
     font-family: 'Noto Sans KR', sans-serif;
-    padding-left: .2rem;
+    padding-left: 0.2rem;
     ${media.tabletMini`font-size: .8rem; margin: 0 0 0 .5rem; padding-left: .1rem;`}
     ${media.tablet`padding-left: .2rem;`}
     margin-right: 0;
@@ -119,11 +117,17 @@ const HeaderWrapper = styled.div`
   }
 `;
 
-<<<<<<< HEAD
-function Header({ login, signup, modal, handleMessage, handleNotice, handleMediaState, barState, handleBarState, resBarState }) {
-=======
-function Header ({ login, signup, modal, handleMessage, handleNotice, handleMediaState, handleSongMediaState, handleSongBarState, barState, handleBarState, resBarState }) {
->>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
+function Header({
+  login,
+  signup,
+  modal,
+  handleMessage,
+  handleNotice,
+  handleMediaState,
+  barState,
+  handleBarState,
+  resBarState
+}) {
   const isLogin = useSelector((state) => state.userReducer).token;
   const headerState = useSelector((state) => state.headerReducer);
   const dispatch = useDispatch();
@@ -159,22 +163,27 @@ function Header ({ login, signup, modal, handleMessage, handleNotice, handleMedi
 
   return (
     <HeaderWrapper>
-      <div className='header'>
-        <div className='header-container-1'>
-          <Link to='/mainpage' onClick={() => { handleSongMediaState(); handleSongBarState(); }}>
-            <div className='logo'>
-              <img src={Logo} className='logo-image' alt='m4m-logo' />
+      <div className="header">
+        <div className="header-container-1">
+          <Link
+            to="/mainpage"
+            onClick={() => {
+              handleSongMediaState();
+              handleSongBarState();
+            }}>
+            <div className="logo">
+              <img src={Logo} className="logo-image" alt="m4m-logo" />
             </div>
           </Link>
         </div>
-        <div className='header-container-2'>
-          <Link to='/recommendpage'>
+        <div className="header-container-2">
+          <Link to="/recommendpage">
             <button className={headerState.recommendBtn ? 'btn recommend-page' : 'display-none'}>
               노래 추천
             </button>
           </Link>
         </div>
-        <div className='header-container-3'>
+        <div className="header-container-3">
           <HeaderSearchbar
             isRecommend={headerState.searchBar}
             handleMediaState={handleMediaState}
@@ -185,31 +194,25 @@ function Header ({ login, signup, modal, handleMessage, handleNotice, handleMedi
             handleNotice={handleNotice}
           />
         </div>
-        <div className='header-container-4'>
-          {!isLogin
-            ? (
-              <button className='btn login' onClick={login}>
-                로그인
-              </button>
-            )
-            : (
-              <button className='btn logout' onClick={handleLogoutRequest}>
-                로그아웃
-              </button>
-            )}
-          {!isLogin
-            ? (
-              <button className='btn signup' onClick={signup}>
-                회원가입
-              </button>
-            )
-            : (
-              <Link to='/myinfo'>
-                <button className='btn mypage'>
-                  마이페이지
-                </button>
-              </Link>
-            )}
+        <div className="header-container-4">
+          {!isLogin ? (
+            <button className="btn login" onClick={login}>
+              로그인
+            </button>
+          ) : (
+            <button className="btn logout" onClick={handleLogoutRequest}>
+              로그아웃
+            </button>
+          )}
+          {!isLogin ? (
+            <button className="btn signup" onClick={signup}>
+              회원가입
+            </button>
+          ) : (
+            <Link to="/myinfo">
+              <button className="btn mypage">마이페이지</button>
+            </Link>
+          )}
         </div>
       </div>
     </HeaderWrapper>

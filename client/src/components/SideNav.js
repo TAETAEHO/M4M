@@ -14,7 +14,7 @@ const SideNavWrapper = styled.div`
     min-height: 100%;
   }
   .menu-container {
-    margin: .8rem auto -1rem;
+    margin: 0.8rem auto -1rem;
     width: 100vw;
     background-color: ${Colors.lightGray};
     min-width: 12rem;
@@ -50,20 +50,42 @@ const SideNavWrapper = styled.div`
       display: none;
     }
   }
-  @keyframes rainbow {     
-    0% { color: #ff2a2a; }
-    15% { color: #ff7a2a; }
-    30% { color: #ffc52a; }
-    45% { color: #43ff2a; }
-    60% { color: #2a89ff; }
-    75% { color: #202082; }
-    90% { color: #6b2aff; } 
-    100% { color: #e82aff; }
+  @keyframes rainbow {
+    0% {
+      color: #ff2a2a;
+    }
+    15% {
+      color: #ff7a2a;
+    }
+    30% {
+      color: #ffc52a;
+    }
+    45% {
+      color: #43ff2a;
+    }
+    60% {
+      color: #2a89ff;
+    }
+    75% {
+      color: #202082;
+    }
+    90% {
+      color: #6b2aff;
+    }
+    100% {
+      color: #e82aff;
+    }
   }
   @keyframes horizontal {
-    0% { margin-left: 9px; }
-    50% { margin-left: 11px; }
-    100% { margin-left: 9px; }
+    0% {
+      margin-left: 9px;
+    }
+    50% {
+      margin-left: 11px;
+    }
+    100% {
+      margin-left: 9px;
+    }
   }
 `;
 
@@ -76,11 +98,12 @@ const Item = styled.div`
   font-size: 1.05rem;
   text-decoration: ${(props) => props.underline};
   text-decoration-thickness: 2px;
-  text-underline-offset: 2.5px; 
+  text-underline-offset: 2.5px;
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     animation: rainbow 2000ms infinite;
-  } 
+  }
 
   .arrow {
     display: inline-flex;
@@ -95,19 +118,20 @@ const SubItem = styled.div`
   margin: 0px 18px;
   padding: 8px 12px;
   /* font-family: 'Arial'; */
-  font-size: .9rem;
+  font-size: 0.9rem;
   color: ${Colors.darkGray};
   cursor: pointer;
   text-decoration: ${(props) => props.underline};
   text-decoration-thickness: 1px;
-  text-underline-offset: 2px; 
+  text-underline-offset: 2px;
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     animation: rainbow 2000ms infinite;
-  } 
+  }
 `;
 
-function SideNav () {
+function SideNav() {
   const dispatch = useDispatch();
   const [navState, setNavState] = useState('active');
   const [isOpen, setIsOpen] = useState(null);
@@ -115,7 +139,15 @@ function SideNav () {
   const accordionList = ['장르', '해시태그', '연도'];
   const accordionObj = {
     장르: ['발라드', '댄스', '랩/힙합', 'R&B/Soul', '인디음악', '록/메탈', '트로트', '포크/블루스'],
-    해시태그: ['#인생곡인', '#가사가재밌는', '#몸이기억하는', '#눈물샘자극', '#노래방금지곡', '#영원한18번', '#추억소환'],
+    해시태그: [
+      '#인생곡인',
+      '#가사가재밌는',
+      '#몸이기억하는',
+      '#눈물샘자극',
+      '#노래방금지곡',
+      '#영원한18번',
+      '#추억소환'
+    ],
     연도: new Array(18).fill(1992).map((el, idx) => String(el + idx))
   };
   const mypageList = ['회원정보', '관심노래'];
@@ -152,14 +184,7 @@ function SideNav () {
   };
 
   const maintainNavState = () => {
-<<<<<<< HEAD
-    if (768 <= window.innerWidth ) setNavState('active');
-=======
-    if (window.innerWidth >= 768) {
-      if (navState === 'active') setNavState('active');
-    } else setNavState('deactive');
-    if (window.innerWidth >= 768) setNavState('active');
->>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
+    if (768 <= window.innerWidth) setNavState('active');
     else setNavState('deactive');
   };
 
@@ -171,67 +196,73 @@ function SideNav () {
 
   return (
     <SideNavWrapper>
-      <div className='contents-container'>
-        <div className='menu-container' onClick={handleNavState}>
-          {navState === 'deactive'
-            ? <FontAwesomeIcon className='menu' icon={faBars} size='2x' />
-            : <FontAwesomeIcon className='menu' icon={faTimes} size='2x' />}
+      <div className="contents-container">
+        <div className="menu-container" onClick={handleNavState}>
+          {navState === 'deactive' ? (
+            <FontAwesomeIcon className="menu" icon={faBars} size="2x" />
+          ) : (
+            <FontAwesomeIcon className="menu" icon={faTimes} size="2x" />
+          )}
         </div>
         <div className={`sidenav ${navState}`}>
           {/* history 값이 mainpage일 때, 다른 값 보여주기 */}
-          <div className={history.location.pathname === '/mainpage' ? 'main-active' : 'main-deactive'}>
-            {Object.keys(plainList)
-              .map((list, idx) => {
-                return (
-                  <Item
-                    key={idx + 1}
-                    value={list}
-                    onClick={handleSelectChange}
-                    underline={navType === list ? 'underline' : 'none'}
-                  >
-                    <span className='space' />{plainList[list]}
+          <div
+            className={history.location.pathname === '/mainpage' ? 'main-active' : 'main-deactive'}>
+            {Object.keys(plainList).map((list, idx) => {
+              return (
+                <Item
+                  key={idx + 1}
+                  value={list}
+                  onClick={handleSelectChange}
+                  underline={navType === list ? 'underline' : 'none'}>
+                  <span className="space" />
+                  {plainList[list]}
+                </Item>
+              );
+            })}
+            {accordionList.map((list, idx) => {
+              return (
+                <div key={idx + 1}>
+                  <Item value={list} onClick={handleIsOpen}>
+                    <span className="arrow" />
+                    {list}
                   </Item>
-                );
-              })}
-            {accordionList
-              .map((list, idx) => {
-                return (
-                  <div key={idx + 1}>
-                    <Item value={list} onClick={handleIsOpen}>
-                      <span className='arrow' />{list}
-                    </Item>
-                    {isOpen === list
-                      ? accordionObj[list]
-                        .map((el, idx) =>
-                          <SubItem
-                            key={idx + 1}
-                            value={el}
-                            onClick={handleSelectChange}
-                            underline={navType === el ? 'underline' : 'none'}
-                          >
-                            {el}
-                          </SubItem>
-                        )
-                      : null}
-                  </div>
-                );
-              })}
+                  {isOpen === list
+                    ? accordionObj[list].map((el, idx) => (
+                        <SubItem
+                          key={idx + 1}
+                          value={el}
+                          onClick={handleSelectChange}
+                          underline={navType === el ? 'underline' : 'none'}>
+                          {el}
+                        </SubItem>
+                      ))
+                    : null}
+                </div>
+              );
+            })}
           </div>
           {/* history 값이 mylike나 myinfo일 때, 다른 값 보여주기 */}
-          <div className={history.location.pathname === '/mylike' || history.location.pathname === '/myinfo' ? 'main-active' : 'main-deactive'}>
-            {mypageList
-              .map((list, idx) => {
-                return (
-                  <Item
-                    key={idx + 1}
-                    value={list}
-                    onClick={() => handleClicked(idx)}
-                    underline={history.location.pathname === mypageEndpoint[idx] ? 'underline' : 'none'}
-                  >
-                    <span className='space' />{list}
-                  </Item>
-                );
-              })}
+          <div
+            className={
+              history.location.pathname === '/mylike' || history.location.pathname === '/myinfo'
+                ? 'main-active'
+                : 'main-deactive'
+            }>
+            {mypageList.map((list, idx) => {
+              return (
+                <Item
+                  key={idx + 1}
+                  value={list}
+                  onClick={() => handleClicked(idx)}
+                  underline={
+                    history.location.pathname === mypageEndpoint[idx] ? 'underline' : 'none'
+                  }>
+                  <span className="space" />
+                  {list}
+                </Item>
+              );
+            })}
           </div>
         </div>
       </div>
