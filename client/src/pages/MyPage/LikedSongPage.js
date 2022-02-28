@@ -18,18 +18,11 @@ const Wrapper = styled.div`
   }
   .main {
     display: inline-block;
-<<<<<<< HEAD
     ${media.tablet`display: flex`};
     min-height: calc(100vh - 62.39px - 129px);
     ${media.tabletMini`min-height: calc(100vh - 62.39px - 116px)`};
     ${media.tablet`min-height: calc(100vh - 62.39px - 71px)`};
     ${media.laptop`min-height: calc(100vh - 62.39px - 61px)`};
-=======
-    ${media.tablet`display: flex;`}
-    min-height: calc(100vh - 62.39px - 100px);
-    ${media.tablet`min-height: calc(100vh - 62.39px - 62px);`}
-    ${media.laptop`min-height: calc(100vh - 62.39px - 55px);`}
->>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
   }
   .loading-container {
     padding-top: 2rem;
@@ -52,16 +45,16 @@ const Wrapper = styled.div`
     visibility: hidden;
   }
   .scrollable::-webkit-scrollbar-thumb:hover {
-    border-top: .5px solid;
-    border-bottom: .5px solid;
-    border-left: .5px solid;
+    border-top: 0.5px solid;
+    border-bottom: 0.5px solid;
+    border-left: 0.5px solid;
     border-right: 1px solid;
     cursor: all-scroll;
   }
   .button-container {
     display: flex;
     padding-top: 2rem;
-    margin: -1rem 0 .2rem;
+    margin: -1rem 0 0.2rem;
     width: 100%;
     ${media.tabletMini`padding-top: 2rem; margin: -1rem 0 .2rem;`}
     ${media.tablet`margin: 0 0 .2rem;`}
@@ -72,8 +65,8 @@ const Wrapper = styled.div`
   }
   button {
     margin-left: auto;
-    word-spacing: -.1rem;
-    font-size: .8rem;
+    word-spacing: -0.1rem;
+    font-size: 0.8rem;
     color: ${Colors.darkGray};
     background: none;
     border: none;
@@ -90,8 +83,9 @@ const Wrapper = styled.div`
     margin-bottom: -1.3rem;
     width: 100%;
   }
-  .field-container > div, input {
-    margin: 0 0 .3rem;
+  .field-container > div,
+  input {
+    margin: 0 0 0.3rem;
   }
   .field {
     display: grid;
@@ -100,14 +94,14 @@ const Wrapper = styled.div`
     ${media.tabletMini`grid-template-columns: 11% 32% 30% 13% 8%; width: 100%;`}
     ${media.tablet`grid-template-columns: 12% 32% 32% 12% auto; width: 100%;`}
     margin: .75rem auto 0;
-    padding: .15rem .15rem;
+    padding: 0.15rem 0.15rem;
     border: solid 1px ${Colors.lightGray};
     border-left: none;
     border-right: none;
   }
   .select-all,
   .select-one {
-    margin-right: .7rem;
+    margin-right: 0.7rem;
   }
   .field .grid-item {
     text-align: left;
@@ -115,22 +109,23 @@ const Wrapper = styled.div`
     color: ${Colors.gray};
   }
   .grid-item {
-    font-size: .8rem;
+    font-size: 0.8rem;
     align-self: center;
   }
-  .grid-item:not(:first-of-type){
-    padding-left: .2rem;
+  .grid-item:not(:first-of-type) {
+    padding-left: 0.2rem;
   }
   .field-album {
     /* visibility: hidden; */
   }
   .field-title {
     padding: auto;
-    margin-left: .4rem;
+    margin-left: 0.4rem;
     width: 100%;
     ${media.tabletMini`margin-left: .6rem;`}
   }
-  .song-container > div, input {
+  .song-container > div,
+  input {
     margin: 0;
   }
   .song-container {
@@ -145,19 +140,19 @@ const Wrapper = styled.div`
     ${media.tabletMini`grid-template-columns: 11% 32% 30% 13% 8%; width: 100%;`}
     ${media.tablet`grid-template-columns: 12% 32% 32% 12% auto; width: 100%;`}
     margin: 0 auto;
-    padding: .4rem .15rem;
+    padding: 0.4rem 0.15rem;
     border-bottom: solid 1px ${Colors.lightGray};
     cursor: pointer;
   }
-  .song-info-container > div:nth-child(-n+5) {
-    margin-top: .3rem;
+  .song-info-container > div:nth-child(-n + 5) {
+    margin-top: 0.3rem;
   }
   .scrollable {
     overflow-x: auto;
-    white-space : nowrap;
+    white-space: nowrap;
   }
   .album_art {
-    margin: auto .25rem;
+    margin: auto 0.25rem;
     width: 6rem;
     height: auto;
     grid-row: 1 / 4;
@@ -165,23 +160,24 @@ const Wrapper = styled.div`
   .info {
     width: 100%;
     font-family: 'Arial';
-    font-size: .8rem;
+    font-size: 0.8rem;
     text-align: left;
     color: ${Colors.black};
   }
-  .info:not(:first-of-type){
-    padding-left: .2rem;
+  .info:not(:first-of-type) {
+    padding-left: 0.2rem;
   }
   .title {
-    margin-left: .5rem;
+    margin-left: 0.5rem;
     ${media.tabletMini`padding-left: .3rem;`}
   }
-  .date, .like {
+  .date,
+  .like {
     color: ${Colors.gray};
   }
   .hashtagBox {
     margin-top: 1rem;
-    margin-left: .4rem;
+    margin-left: 0.4rem;
     grid-row: 2;
     grid-column: 2 / end;
     ${media.tablet`padding-left: .3rem;`}
@@ -190,21 +186,21 @@ const Wrapper = styled.div`
     margin-top: 1.2rem;
     color: ${Colors.black};
     font-family: 'Arial';
-    font-size: .9rem;
+    font-size: 0.9rem;
   }
 `;
 
 const HashTag = styled.div`
   float: left;
-  margin: auto .2rem .2rem;
-  padding: .2rem;
+  margin: auto 0.2rem 0.2rem;
+  padding: 0.2rem;
   border: solid 1px;
-  border-color: ${props => props.borderColor};
+  border-color: ${(props) => props.borderColor};
   border-radius: 10px;
-  background-color: ${props => props.backgroundColor};
-  color: ${props => props.textColor};
+  background-color: ${(props) => props.backgroundColor};
+  color: ${(props) => props.textColor};
   font-family: 'Arial';
-  font-size: .7rem;
+  font-size: 0.7rem;
 `;
 
 const GetLikedSong = ({ modal, handleMessage, handleNotice }) => {
@@ -215,7 +211,16 @@ const GetLikedSong = ({ modal, handleMessage, handleNotice }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [CheckList, setCheckList] = useState([]);
   const [IdList, setIdList] = useState([]);
-  const Hashtag = ['좋아요', '#인생곡인', '#가사가재밌는', '#몸이기억하는', '#눈물샘자극', '#노래방금지곡', '#영원한18번', '#추억소환'];
+  const Hashtag = [
+    '좋아요',
+    '#인생곡인',
+    '#가사가재밌는',
+    '#몸이기억하는',
+    '#눈물샘자극',
+    '#노래방금지곡',
+    '#영원한18번',
+    '#추억소환'
+  ];
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -313,65 +318,80 @@ const GetLikedSong = ({ modal, handleMessage, handleNotice }) => {
   return (
     <Wrapper>
       <GlobalStyle />
-      <div className='main'>
+      <div className="main">
         <SideNav />
-        {isLoading
-          ? <div className='loading-container'>로딩 중입니다...</div>
-          : <div className='songlist'>
-            <div className='button-container'>
+        {isLoading ? (
+          <div className="loading-container">로딩 중입니다...</div>
+        ) : (
+          <div className="songlist">
+            <div className="button-container">
               <button onClick={handleSongDelete}>선택 항목 삭제</button>
             </div>
-            <div className='field-container'>
+            <div className="field-container">
               <input
-                type='checkbox'
-                className='select-all'
+                type="checkbox"
+                className="select-all"
                 onChange={onChangeAll}
                 checked={CheckList.length === IdList.length}
               />
-              <div className='field'>
-                <div className='grid-item field-album' />
-                <div className='grid-item field-title'>제목</div>
-                <div className='grid-item field-artist'>가수</div>
-                <div className='grid-item field-date'>발매일</div>
-                <div className='grid-item field-like'>좋아요</div>
+              <div className="field">
+                <div className="grid-item field-album" />
+                <div className="grid-item field-title">제목</div>
+                <div className="grid-item field-artist">가수</div>
+                <div className="grid-item field-date">발매일</div>
+                <div className="grid-item field-like">좋아요</div>
               </div>
-            </div><br />
-            {songList.length !== 0
-              ? songList.map((song, idx) => {
+            </div>
+            <br />
+            {songList.length !== 0 ? (
+              songList.map((song, idx) => {
                 return (
                   <div key={idx}>
-                    <div className='song-container'>
+                    <div className="song-container">
                       <input
-                        type='checkbox'
-                        className='select-one'
+                        type="checkbox"
+                        className="select-one"
                         onChange={(e) => onChangeEach(e, song.id)}
                         checked={CheckList.includes(song.id)}
                       />
-                      <div className='song-info-container' onClick={() => handleSongClicked(song)}>
-                        <img src={song.album_art} alt={song.id} className='info album_art' />
-                        <div className='info title scrollable'>{song.title}</div>
-                        <div className='info artist scrollable'>{song.artist}</div>
-                        <div className='info date'>{song.date}</div>
-                        <div className='info like'>
-                          <FontAwesomeIcon icon={faHeart} size='xs' color='red' />
-                          {' '}{song.hashtagLike[0][1]}
+                      <div className="song-info-container" onClick={() => handleSongClicked(song)}>
+                        <img src={song.album_art} alt={song.id} className="info album_art" />
+                        <div className="info title scrollable">{song.title}</div>
+                        <div className="info artist scrollable">{song.artist}</div>
+                        <div className="info date">{song.date}</div>
+                        <div className="info like">
+                          <FontAwesomeIcon icon={faHeart} size="xs" color="red" />{' '}
+                          {song.hashtagLike[0][1]}
                         </div>
-                        <div className='hashtagBox'>
-                          {song.userHashtagLikes && song.hashtagLike.map((tag, idx) => {
-                            return (
-                              <div key={song + idx}>
-                                {tag[0] === '좋아요'
-                                  ? null
-                                  : <HashTag
-                                      borderColor={song.userHashtagLikes && song.userHashtagLikes.includes(Hashtag.indexOf(tag[0]) + 1) ? 'none' : Colors.mediumGray}
-                                      backgroundColor={song.userHashtagLikes.includes(Hashtag.indexOf(tag[0]) + 1) ? Colors.darkGray : 'white'}
-                                      textColor={song.userHashtagLikes.includes(Hashtag.indexOf(tag[0]) + 1) ? 'white' : Colors.darkGray}
-                                    >
-                                    {tag[0]} {tag[1]}
-                                  </HashTag>}
-                              </div>
-                            );
-                          })}
+                        <div className="hashtagBox">
+                          {song.userHashtagLikes &&
+                            song.hashtagLike.map((tag, idx) => {
+                              return (
+                                <div key={song + idx}>
+                                  {tag[0] === '좋아요' ? null : (
+                                    <HashTag
+                                      borderColor={
+                                        song.userHashtagLikes &&
+                                        song.userHashtagLikes.includes(Hashtag.indexOf(tag[0]) + 1)
+                                          ? 'none'
+                                          : Colors.mediumGray
+                                      }
+                                      backgroundColor={
+                                        song.userHashtagLikes.includes(Hashtag.indexOf(tag[0]) + 1)
+                                          ? Colors.darkGray
+                                          : 'white'
+                                      }
+                                      textColor={
+                                        song.userHashtagLikes.includes(Hashtag.indexOf(tag[0]) + 1)
+                                          ? 'white'
+                                          : Colors.darkGray
+                                      }>
+                                      {tag[0]} {tag[1]}
+                                    </HashTag>
+                                  )}
+                                </div>
+                              );
+                            })}
                         </div>
                       </div>
                       <br />
@@ -379,8 +399,11 @@ const GetLikedSong = ({ modal, handleMessage, handleNotice }) => {
                   </div>
                 );
               })
-              : <div className='message'>현재 좋아요를 선택한 곡이 없습니다.</div>}
-            </div>}
+            ) : (
+              <div className="message">현재 좋아요를 선택한 곡이 없습니다.</div>
+            )}
+          </div>
+        )}
       </div>
     </Wrapper>
   );

@@ -14,18 +14,11 @@ require('dotenv').config();
 const Wrapper = styled.div`
   .main {
     display: inline-block;
-<<<<<<< HEAD
     min-height: calc(100vh - 62.39px - 129px);
     ${media.tablet`display: flex`};
     ${media.tabletMini`min-height: calc(100vh - 62.39px - 116px)`};
     ${media.tablet`min-height: calc(100vh - 62.39px - 71px)`};
     ${media.laptop`min-height: calc(100vh - 62.39px - 61px)`};
-=======
-    ${media.tablet`display: flex;`}
-    min-height: calc(100vh - 62.39px - 100px);
-    ${media.tablet`min-height: calc(100vh - 62.39px - 62px);`}
-    ${media.laptop`min-height: calc(100vh - 62.39px - 55px);`}
->>>>>>> 34a712fcceeee8e7009561987ad05196db313fd1
   }
   .container {
     width: 100%;
@@ -54,28 +47,28 @@ const Wrapper = styled.div`
   }
   .id-number {
     position: absolute;
-    padding: .4rem .1rem;
-    margin: .2rem;
+    padding: 0.4rem 0.1rem;
+    margin: 0.2rem;
     color: ${Colors.mediumGray};
     /* font-family: 'Arial'; */
-    font-size: .8rem;
+    font-size: 0.8rem;
     ${media.tabletMini`font-size: .85rem; padding: .5rem .2rem;`}
   }
   input {
     width: 15.5rem;
     height: 2rem;
-    padding: .5rem;
+    padding: 0.5rem;
     padding-left: 1rem;
     background-color: #f2f2f2;
     border: none;
     border-radius: 15px;
     /* font-family: 'Arial'; */
-    font-size: .85rem;
+    font-size: 0.85rem;
     ${media.tabletMini`width: 17rem; margin: .2rem auto; font-size: .9rem;`}
   }
   input::-webkit-input-placeholder {
     color: ${Colors.gray};
-    font-size: .85rem;
+    font-size: 0.85rem;
     ${media.tabletMini`font-size: .9rem;`}
   }
   input:focus {
@@ -87,11 +80,11 @@ const Wrapper = styled.div`
   }
   button {
     cursor: pointer;
-    margin: 1.5rem .8rem;
-    padding: .5rem 1.2rem;
+    margin: 1.5rem 0.8rem;
+    padding: 0.5rem 1.2rem;
     border: 2px solid ${Colors.pastelPurple};
     background-color: ${Colors.pastelPurple};
-    font-size: .85rem;
+    font-size: 0.85rem;
     ${media.tabletMini`font-size: .9rem;`}
     color: white;
     transition: 0.5s ease-in-out;
@@ -114,13 +107,13 @@ const Wrapper = styled.div`
 `;
 
 const MyPageField = styled.div`
-  margin: .7rem auto .15rem;
-  padding-left: .2rem;
+  margin: 0.7rem auto 0.15rem;
+  padding-left: 0.2rem;
   text-align: left;
   color: ${Colors.darkGray};
-  font-size: .9rem;
+  font-size: 0.9rem;
   /* font-family: 'Arial'; */
-  margin: .7rem 1rem .15rem;
+  margin: 0.7rem 1rem 0.15rem;
   ${media.tabletMini`margin: .7rem auto .15rem;`}
 
   &:first-of-type {
@@ -131,15 +124,15 @@ const MyPageField = styled.div`
 const AlertMessage = styled.div`
   color: red;
   /* font-family: 'Arial'; */
-  padding-left: .9rem;
+  padding-left: 0.9rem;
 
-  &:not(:last-of-type){
+  &:not(:last-of-type) {
     text-align: left;
-    font-size: .8rem;
+    font-size: 0.8rem;
   }
   &:last-of-type {
-    margin: 0 auto; 
-    font-size: .95rem;
+    margin: 0 auto;
+    font-size: 0.95rem;
   }
 `;
 
@@ -348,10 +341,10 @@ const Mypage = ({ modal, handleMessage, handleNotice }) => {
 
   return (
     <Wrapper>
-      <div className='main'>
+      <div className="main">
         <SideNav />
-        <div className='container'>
-          <div className='greeting'>
+        <div className="container">
+          <div className="greeting">
             <Typewriter
               onInit={(typewriter) => {
                 typewriter
@@ -369,22 +362,22 @@ const Mypage = ({ modal, handleMessage, handleNotice }) => {
               }}
             /> */}
           </div>
-          <div className='mypage-container'>
+          <div className="mypage-container">
             <MyPageField>닉네임</MyPageField>
             <input
-              type='text'
+              type="text"
               placeholder={nickname.split('#')[0]}
               onChange={inputCheck('nickname')}
             />
-            <span className='id-number'>#{nickname.split('#')[1]}</span>
+            <span className="id-number">#{nickname.split('#')[1]}</span>
             <AlertMessage>{checkNickname === 'ok' ? null : checkNickname}</AlertMessage>
             <MyPageField>이메일</MyPageField>
             <input disabled value={email} />
             <MyPageField>비밀번호</MyPageField>
             <input
               disabled={kakao ? 'disabled' : null}
-              type='password'
-              placeholder='영문/숫자 조합 8~10글자'
+              type="password"
+              placeholder="영문/숫자 조합 8~10글자"
               onChange={inputCheck('password')}
             />
             <AlertMessage>
@@ -394,26 +387,24 @@ const Mypage = ({ modal, handleMessage, handleNotice }) => {
             <MyPageField>비밀번호 확인</MyPageField>
             <input
               disabled={kakao ? 'disabled' : null}
-              type='password'
+              type="password"
               onChange={inputCheck('passwordRetype')}
             />
             <AlertMessage>
               {checkRetypePassword ? null : '비밀번호가 일치하지 않습니다'}
             </AlertMessage>
             <MyPageField>출생년도</MyPageField>
-            {kakao && !birthYear
-              ? (
-                <>
-                  <input onChange={inputCheck('birthYear')} />
-                  <AlertMessage>
-                    {checkBirthYear === 'no' ? '올바른 범위내의 출생년도를 입력해주세요' : null}
-                    {checkBirthYear === 'nan' ? '숫자만 입력해주세요' : null}
-                  </AlertMessage>
-                </>
-                )
-              : (
-                <input disabled value={birthYear} />
-                )}
+            {kakao && !birthYear ? (
+              <>
+                <input onChange={inputCheck('birthYear')} />
+                <AlertMessage>
+                  {checkBirthYear === 'no' ? '올바른 범위내의 출생년도를 입력해주세요' : null}
+                  {checkBirthYear === 'nan' ? '숫자만 입력해주세요' : null}
+                </AlertMessage>
+              </>
+            ) : (
+              <input disabled value={birthYear} />
+            )}
             <button onClick={handleEditUserRequest}>정보수정</button>
             <button onClick={handleWithdrawalRequest}>회원탈퇴</button>
             <AlertMessage>{errorMsg}</AlertMessage>
